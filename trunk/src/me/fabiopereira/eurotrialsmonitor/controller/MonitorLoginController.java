@@ -33,7 +33,7 @@ public class MonitorLoginController {
 			request.getSession().setAttribute("monitor", monitor);
 			return "redirect:questionnaire";
 		}
-		return "monitorLogin";
+		return null;
 	}
 	
 }
