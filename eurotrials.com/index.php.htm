@@ -1,0 +1,899 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>	
+
+
+
+<meta name="keywords" content="Eurotrials | Scientific Consultants">
+<meta name="description" content="Eurotrials | Scientific Consultants">
+<meta http-equiv="Author" content="BY COM - Design, New Media, Ambientes e Advertising (www.bycom.com.pt)">
+<meta http-equiv="Corporate" content="Eurotrials">
+<meta http-equiv="Completed-Date" content="30/JUL/2008">
+<meta http-equiv="Revision-Date" content="">
+<meta http-equiv="Revision-Version" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Eurotrials | Scientific Consultants</title>
+
+<link href="index.php_files/style.css" rel="stylesheet" type="text/css">
+<!-- <link href="publish.css" rel="stylesheet" type="text/css" /> -->
+
+<script type="text/javascript" src="index.php_files/mootools-core.js"></script>
+<script type="text/javascript" src="index.php_files/mootools-more.js"></script>
+<script type="text/javascript" src="index.php_files/submenu.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+
+
+function validateForm()
+{
+	var errMsg = '';
+	
+	if($('nomefld').value == '')
+		errMsg = 'Indique o Nome\n';
+		
+	if($('cursofld').value == '')
+		errMsg += 'Indique o Curso\n';
+		
+	if($('emailfld').value == '')
+		errMsg += 'Indique o Email\n';
+	
+	if($('recibofld').value == '')
+		errMsg += 'Indique o Nome para o recibo\n';
+			
+	if($('niffld').value == '')
+		errMsg += 'Indique o NIF\n';
+	
+	if(errMsg != '')
+	{
+		alert(errMsg);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+
+function changeColorTxt(item)
+{
+	
+	$(item).setStyle('color','#ce0e48');
+}
+
+function returnColorTxt(item)
+{
+	$(item).setStyle('color','#666666');
+}
+
+
+function changeArea(imgArea,nomeArea,introArea,areaId)
+{
+	imagem = 'img/' + imgArea;
+
+	$('areaImg').src = imagem;
+	
+	$('areaTitulo').innerHTML = nomeArea;
+	
+	$('areaTexto').innerHTML = introArea;
+	
+	$(areaId).setStyle('color','#ce0e48');
+}
+
+function returnArea(areaId)
+{
+	$(areaId).setStyle('color','#ffffff');
+}
+
+function changeInvestigacao(elementToShow)
+{
+
+	$('investiga1').setStyle("display","none");
+	$('investiga2').setStyle("display","none");
+	$('investiga3').setStyle("display","none");
+	$('investiga4').setStyle("display","none");
+	$('investiga5').setStyle("display","none");
+	$('investiga6').setStyle("display","none");
+	elementToShow.setStyle("display","block");
+}
+
+
+function changeDestaque(imgDestaque,titleDestaque,contDestaque,legenda)
+{
+	if (legenda == 0)
+	{
+		$$('.destaqueTextBorderTop').setStyle('background','none');
+		$$('.destaqueTextBorderBottom').setStyle('background','none');
+		$$('.destaqueTextMeio').setStyle('background','none');
+		$$('.destaqueTextBorderLeft').setStyle('background','none');
+		$$('.destaqueTextBorderRight').setStyle('background','none');
+		
+		destaque = 'img/' + imgDestaque;
+
+		$$('.centerLeft').setStyle('background','url("'+destaque+'") no-repeat');
+		$$('.centerLeft').setStyle('background-position','5px 126px');
+		
+		$('destaqueTextTitle').innerHTML = titleDestaque;
+	}
+
+	else
+	{
+		$$('.destaqueTextBorderTop').setStyle('background','url("img/destaqueTextBorderTop.png") no-repeat');
+		$$('.destaqueTextBorderBottom').setStyle('background','url("img/destaqueTextBorderBottom.png") no-repeat');
+		$$('.destaqueTextMeio').setStyle('background','url("img/destaqueTextBg.jpg") repeat-y');
+		$$('.destaqueTextBorderLeft').setStyle('background','url("img/destaqueTextBorderLeft.png") no-repeat');
+		$$('.destaqueTextBorderRight').setStyle('background','url("img/destaqueTextBorderRight.png") no-repeat');
+
+		destaque = 'img/' + imgDestaque;
+
+		$$('.centerLeft').setStyle('background','url("'+destaque+'") no-repeat');
+		$$('.centerLeft').setStyle('background-position','5px 126px');
+	
+		$('destaqueTextTitle').innerHTML = titleDestaque;
+	
+		//$('destaqueTextTxt').innerHTML = contDestaque;
+	
+	}
+}
+
+
+function cycle(img,txt,num,anterior)
+{
+	$$('.centerLeft').setStyle('background','url("img/'+img+'") no-repeat');
+	$$('.centerLeft').setStyle('background-position','5px 126px');
+		
+	$('destaqueTextTitle').innerHTML = txt;
+	
+	$('number'+anterior).setStyle('color','#ffffff');
+	$('number'+num).setStyle('color','#ce0e48');
+
+}
+
+var currentImageIdx = 0;
+var imagesArr = null;
+var textosArr = null;
+var anterior = 1;
+
+function rotateImage()
+{
+	cycle(imagesArr[currentImageIdx],textosArr[currentImageIdx],currentImageIdx,anterior);
+	currentImageIdx++;
+	anterior = currentImageIdx -1;
+	if(currentImageIdx == imagesArr.length-1)
+		currentImageIdx=0;
+}
+
+function mudaDestaque(imagens, textos)
+{
+	imagesArr = imagens.split(',');
+	textosArr = textos.split(',');
+	rotateImage.periodical(3000);
+}
+
+
+function acordeaoCalendario()
+{
+	var togglers = $$('.barraCalendario');
+	var elements = $$('.calendarioContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/calendario_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/calendario_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoCalendario);
+
+
+function acordeaoFicha()
+{
+	var togglers = $$('.barraFicha');
+	var elements = $$('.fichaContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/ficha_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/ficha_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoFicha);
+
+
+function acordeaoServicos()
+{
+	var togglers = $$('.barraServicos');
+	var elements = $$('.servicosContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/servicos_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/servicos_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoServicos);
+
+
+function acordeaoCasuistica()
+{
+	var togglers = $$('.barraCasuistica');
+	var elements = $$('.casuisticaContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/casuistica_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/casuistica_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoCasuistica);
+
+
+function acordeaoAmerica()
+{
+	var togglers = $$('.barraAmerica');
+	var elements = $$('.americaContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/barraAmerica_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/barraAmerica_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoAmerica);
+
+
+
+function acordeaoBrasil()
+{
+	var togglers = $$('.barraBrasil2');
+	var elements = $$('.brasilContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/casuistica_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/casuistica_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoBrasil);
+
+
+
+/*function acordeaoEquipaAmerica()
+{
+	var togglers = $$('.barraEquipaAmerica');
+	var elements = $$('.equipaAmericaContent');
+	var accordion = new Accordion (togglers, elements, {
+		display: -1,
+		alwaysHide: true,
+		onActive: function (togglers, elements){
+			togglers.setStyle('background', 'url("img/equipaAmericaLatinaBarra_open.jpg") no-repeat');
+		},
+		onBackground: function (togglers, elements){
+			togglers.setStyle('background', 'url("img/equipaAmericaLatinaBarra_close.jpg") no-repeat');
+		}
+	});
+}
+window.addEvent('domready',acordeaoEquipaAmerica);
+*/
+
+/*function acordeaoEquipa()
+{
+	var togglers = $$('.barraEquipa');
+	var elements = $$('.equipaContent');
+	var accordion = new Accordion (togglers, elements, {
+		display: -1,
+		alwaysHide: true,
+		onActive: function (togglers, elements){
+			togglers.setStyle('background', 'url("img/equipaBarra_open.jpg") no-repeat');
+		},
+		onBackground: function (togglers, elements){
+			togglers.setStyle('background', 'url("img/equipaBarra_close.jpg") no-repeat');
+		}
+	});
+}
+window.addEvent('domready',acordeaoEquipa);
+*/
+
+function activarAccordion(contentId)
+{
+	obj = document.getElementById(contentId);
+
+	if(obj.style.display == 'none')
+	{
+		obj.style.display = 'block';
+	}
+}
+
+
+function changeForm(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+}
+
+function restoreForm(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+}
+
+
+function changeImg(obj,imageName)
+{
+	obj.src = imageName;
+}
+
+
+function changeInvestiga(id,idClass,idClassOn)
+{
+	$('investigacaoClienteItem1').style.display = 'block';
+	$('investigacaoClienteItem2').style.display = 'block';
+	$('investigacaoClienteItem3').style.display = 'block';
+	$('investigacaoClienteItem4').style.display = 'block';
+	$('investigacaoClienteItem5').style.display = 'block';
+
+	$('investigacaoClienteItem1On').style.display = 'none';
+	$('investigacaoClienteItem2On').style.display = 'none';
+	$('investigacaoClienteItem3On').style.display = 'none';
+	$('investigacaoClienteItem4On').style.display = 'none';
+	$('investigacaoClienteItem5On').style.display = 'none';
+
+	$('investiga1').style.display = 'none';
+	$('investiga2').style.display = 'none';
+	$('investiga3').style.display = 'none';
+	$('investiga4').style.display = 'none';
+	$('investiga5').style.display = 'none';
+	$('investiga6').style.display = 'none';
+
+	obj = document.getElementById(idClass);
+	obj.style.display = 'none';
+
+	obj2 = document.getElementById(idClassOn);
+	obj2.style.display = 'block';
+
+/*	$('fase2').src= 'img/ID_consultoria.jpg';
+	$('fase3').src= 'img/ID_consultoriaProduto.jpg';
+	$('fase4').src= 'img/ID_preclinico.jpg';
+	$('fase5').src= 'img/ID_clinico.jpg';
+	$('fase6').src= 'img/ID_investigacao.jpg';
+*/
+
+	$('fase2').style.display = 'block';
+	$('fase3').style.display = 'block';
+	$('fase4').style.display = 'block';
+	$('fase5').style.display = 'block';
+	$('fase6').style.display = 'block';
+
+	$('fase2On').style.display = 'none';
+	$('fase3On').style.display = 'none';
+	$('fase4On').style.display = 'none';
+	$('fase5On').style.display = 'none';
+	$('fase6On').style.display = 'none';
+
+	$('breadcrumb2').style.display = 'none';
+	$('breadcrumb3').style.display = 'none';
+	$('breadcrumb4').style.display = 'none';
+	$('breadcrumb5').style.display = 'none';
+	$('breadcrumb6').style.display = 'none';
+
+
+
+	if (id == 'cli1' || id == 'cli2')
+	{
+		$('fase2').style.display = 'none';
+		$('fase3').style.display = 'none';
+		$('fase4').style.display = 'none';
+		$('fase5').style.display = 'none';
+		$('fase6').style.display = 'none';
+
+		$('fase2On').style.display = 'block';
+		$('fase3On').style.display = 'block';
+		$('fase4On').style.display = 'block';
+		$('fase5On').style.display = 'block';
+		$('fase6On').style.display = 'block';
+
+		$('fasesBreadcrumbContent').style.display = 'block';
+
+		$('breadcrumb2').style.display = 'block';
+		$('breadcrumb3').style.display = 'block';
+		$('breadcrumb4').style.display = 'block';
+		$('breadcrumb5').style.display = 'block';
+		$('breadcrumb6').style.display = 'block';
+	}
+	else if (id == 'cli3')
+	{
+		$('fase2').style.display = 'none';
+		$('fase4').style.display = 'none';
+		$('fase5').style.display = 'none';
+		$('fase6').style.display = 'none';
+
+		$('fase2On').style.display = 'block';
+		$('fase4On').style.display = 'block';
+		$('fase5On').style.display = 'block';
+		$('fase6On').style.display = 'block';
+
+		$('fasesBreadcrumbContent').style.display = 'block';
+
+		$('breadcrumb2').style.display = 'block';
+		$('breadcrumb4').style.display = 'block';
+		$('breadcrumb5').style.display = 'block';
+		$('breadcrumb6').style.display = 'block';
+	}
+	else if (id == 'cli4')
+	{
+		$('fase3').style.display = 'none';
+		$('fase6').style.display = 'none';
+
+		$('fase3On').style.display = 'block';
+		$('fase6On').style.display = 'block';
+
+		$('fasesBreadcrumbContent').style.display = 'block';
+
+		$('breadcrumb3').style.display = 'block';
+		$('breadcrumb6').style.display = 'block';
+	}
+	else if (id == 'cli5')
+	{
+		$('fase3').style.display = 'none';
+
+		$('fase3On').style.display = 'block';
+
+		$('fasesBreadcrumbContent').style.display = 'block';
+
+		$('breadcrumb3').style.display = 'block';
+	}
+}
+function restoreInvestiga(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+	
+	if (id == 'cli1' || id == 'cli2')
+	{
+		$('fase2').src= 'img/ID_consultoria.jpg';
+		$('fase3').src= 'img/ID_consultoriaProduto.jpg';
+		$('fase4').src= 'img/ID_preclinico.jpg';
+		$('fase5').src= 'img/ID_clinico.jpg';
+		$('fase6').src= 'img/ID_investigacao.jpg';
+	}
+	else if (id == 'cli3')
+	{
+		$('fase2').src= 'img/ID_consultoria.jpg';
+		$('fase4').src= 'img/ID_preclinico.jpg';
+		$('fase5').src= 'img/ID_clinico.jpg';
+		$('fase6').src= 'img/ID_investigacao.jpg';
+	}	
+	else if (id == 'cli4')
+	{
+		$('fase3').src= 'img/ID_consultoriaProduto.jpg';
+		$('fase6').src= 'img/ID_investigacao.jpg';
+	}
+	else if (id == 'cli5')
+	{
+		$('fase3').src= 'img/ID_consultoriaProduto.jpg';
+	}
+}
+
+
+
+function changeInvestigaEN(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+	
+	if (id == 'cli1' || id == 'cli2')
+	{
+		$('fase2').src= 'img/ID_consultoriaEN_on.jpg';
+		$('fase3').src= 'img/ID_consultoriaProdutoEN_on.jpg';
+		$('fase4').src= 'img/ID_preclinicoEN_on.jpg';
+		$('fase5').src= 'img/ID_clinicoEN_on.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN_on.jpg';
+	}
+	else if (id == 'cli3')
+	{
+		$('fase2').src= 'img/ID_consultoriaEN_on.jpg';
+		$('fase4').src= 'img/ID_preclinicoEN_on.jpg';
+		$('fase5').src= 'img/ID_clinicoEN_on.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN_on.jpg';
+	}
+	else if (id == 'cli4')
+	{
+		$('fase3').src= 'img/ID_consultoriaProdutoEN_on.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN_on.jpg';
+	}
+	else if (id == 'cli5')
+	{
+		$('fase3').src= 'img/ID_consultoriaProdutoEN_on.jpg';
+	}
+}
+
+function restoreInvestigaEN(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+	
+	if (id == 'cli1' || id == 'cli2')
+	{
+		$('fase2').src= 'img/ID_consultoriaEN.jpg';
+		$('fase3').src= 'img/ID_consultoriaProdutoEN.jpg';
+		$('fase4').src= 'img/ID_preclinicoEN.jpg';
+		$('fase5').src= 'img/ID_clinicoEN.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN.jpg';
+	}
+	else if (id == 'cli3')
+	{
+		$('fase2').src= 'img/ID_consultoriaEN.jpg';
+		$('fase4').src= 'img/ID_preclinicoEN.jpg';
+		$('fase5').src= 'img/ID_clinicoEN.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN.jpg';
+	}	
+	else if (id == 'cli4')
+	{
+		$('fase3').src= 'img/ID_consultoriaProdutoEN.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN.jpg';
+	}
+	else if (id == 'cli5')
+	{
+		$('fase3').src= 'img/ID_consultoriaProdutoEN.jpg';
+	}
+}
+
+function acordeaoRecrutamento()
+{
+	var togglers = $$('.recrutamentoItemTopo');
+	var elements = $$('.recrutamentoItemDescricao');
+	var accordion = new Accordion (togglers, elements, {
+		display: -1,
+		alwaysHide: true,
+		onActive: function (togglers, elements){
+			
+		},
+		onBackground: function (togglers, elements){
+			
+		}
+	});
+}
+window.addEvent('domready',acordeaoRecrutamento);
+
+
+
+function activarAccordion(contentId)
+{
+	obj = document.getElementById(contentId);
+
+    if(obj.style.display == 'none')
+   {
+      obj.style.display = 'block';
+   }
+}
+
+
+function changeContent(elementToHide,elementToShow)
+{
+	elementToHide.setStyle("display","none");
+	elementToShow.setStyle("display","block");
+}
+
+
+function validateForm()
+{
+
+	var errMsg = '';
+	
+	if($('contNome').value == '')
+		errMsg = 'You must indicate a name\n';
+		
+	if(!CheckValidEmail($('contEmail')) || $('contEmail').value == '')
+		errMsg += 'You must indicate a valid email\n';
+	
+	if(errMsg != '')
+	{
+		alert(errMsg);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+function CheckValidEmail(field)
+{
+	var str = field.value;
+
+	var emailReg = "^[\\w-_\.]*[\\w-_\.]\@[\\w]\.+[\\w]+[\\w]$";
+	var regex = new RegExp(emailReg);
+    ret = regex.test(str);
+
+	if(!ret)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+
+
+//]]>
+</script>
+
+</head><body>
+
+	<div class="siteContainer">
+		<div class="header">
+			<div class="topHeader">
+				<div class="headerTxt">
+					<img src="index.php_files/headerTxt.png" alt="Developing Clinical Research in Europe and Latin America" title="Developing Clinical Research in Europe and Latin America" border="0">
+				</div>
+			</div>
+			<div class="clearBoth"></div>
+			<div class="logoCont">
+			<div class="logo">
+				<a href="http://www.eurotrials.com/index.php?m=0&amp;idioma=1"><img style="border: medium none ;" src="index.php_files/logo.png" alt="Eurotrials &#8211; Scientific Consultants" title="Eurotrials &#8211; Scientific Consultants"></a>
+			</div>
+			</div>
+			<div class="menuGlobal" id="menuGlobal" style="display: block; opacity: 1;">
+				<div class="menuItemContainer"><div class="menu"><div class="menuBGLeft"></div><div class="menuBGRepeat">Quem Somos</div><div class="menuBGRight"></div></div><div class="clearBoth"></div><div style="width: 86px;" class="subMenuContainer"><div style="overflow: hidden; height: 0px; width: 0px; visibility: hidden; opacity: 0;" class="subMenu"><div style="width: 136px;" class="topLine"><div class="leftColumn"></div><div style="width: 120px;" class="centerColumn"></div><div class="rightColumn"></div></div><div style="width: 127px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=6&amp;idioma=1">Apresentação</a></div><div style="width: 127px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=7&amp;idioma=1">Certificações</a></div><div style="width: 127px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=8&amp;idioma=1">Responsabilidade Social</a></div><div style="width: 127px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=9&amp;idioma=1">Parceiros</a></div><div style="width: 127px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=24&amp;idioma=1">Recrutamento</a></div><div style="width: 136px;" class="bottomLine"><div class="leftColumn"></div><div style="width: 120px;" class="centerColumn"></div><div class="rightColumn"></div></div></div></div></div><div class="menuItemContainer"><div class="menu"><div class="menuBGLeft"></div><div class="menuBGRepeat">Onde Estamos</div><div class="menuBGRight"></div></div><div class="clearBoth"></div><div style="width: 92px;" class="subMenuContainer"><div style="overflow: hidden; height: 0px; width: 0px; visibility: hidden; opacity: 0;" class="subMenu"><div style="width: 106px;" class="topLine"><div class="leftColumn"></div><div style="width: 90px;" class="centerColumn"></div><div class="rightColumn"></div></div><div style="width: 97px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=10&amp;idioma=1">Europa</a></div><div style="width: 97px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=11&amp;idioma=1">América Latina</a></div><div style="width: 97px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=100&amp;idioma=1">Brasil</a></div><div style="width: 106px;" class="bottomLine"><div class="leftColumn"></div><div style="width: 90px;" class="centerColumn"></div><div class="rightColumn"></div></div></div></div></div><div class="menuItemContainer"><div class="menu"><div class="menuBGLeft"></div><div class="menuBGRepeat">Áreas de Actuação</div><div class="menuBGRight"></div></div><div class="clearBoth"></div><div style="width: 113px;" class="subMenuContainer"><div style="overflow: hidden; height: 0px; width: 0px; visibility: hidden; opacity: 0;" class="subMenu"><div style="width: 177px;" class="topLine"><div class="leftColumn"></div><div style="width: 161px;" class="centerColumn"></div><div class="rightColumn"></div></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=20&amp;idioma=1">Investigação e Desenvolvimento</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=15&amp;idioma=1">Ensaios Clínicos</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=16&amp;idioma=1">Epidemiologia</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=14&amp;idioma=1">Gestão de Dados</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=13&amp;idioma=1">Bioestatística</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=12&amp;idioma=1">Assuntos Regulamentares</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=18&amp;idioma=1">Farmacovigilância</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=17&amp;idioma=1">Fármaco-Economia</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=21&amp;idioma=1">Qualidade</a></div><div style="width: 168px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=19&amp;idioma=1">Formação</a></div><div style="width: 177px;" class="bottomLine"><div class="leftColumn"></div><div style="width: 161px;" class="centerColumn"></div><div class="rightColumn"></div></div></div></div></div><div class="menuItemContainer"><div class="menu"><div class="menuBGLeft"></div><div class="menuBGRepeat">Publicações</div><div class="menuBGRight"></div></div><div class="clearBoth"></div><div style="width: 81px;" class="subMenuContainer"><div style="overflow: hidden; height: 0px; width: 0px; visibility: hidden; opacity: 0;" class="subMenu"><div style="width: 111px;" class="topLine"><div class="leftColumn"></div><div style="width: 95px;" class="centerColumn"></div><div class="rightColumn"></div></div><div style="width: 102px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=25&amp;idioma=1">Artigos</a></div><div style="width: 102px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=26&amp;idioma=1">Posters</a></div><div style="width: 102px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=27&amp;idioma=1">Boletins</a></div><div style="width: 102px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=28&amp;idioma=1">Gauss</a></div><div style="width: 102px;" class="subMenuItem"><a href="http://www.eurotrials.com/index.php?m=101&amp;idioma=1">Outras Publicações</a></div><div style="width: 111px;" class="bottomLine"><div class="leftColumn"></div><div style="width: 95px;" class="centerColumn"></div><div class="rightColumn"></div></div></div></div></div><div class="menu"><div class="menuBGLeft"></div><div class="menuBGRepeat"><a href="http://www.eurotrials.com/index.php?m=22&amp;idioma=1"><div style="overflow: visible; width: auto;">Contactos</div></a></div><div class="menuBGRight"></div></div><div class="menu"><div class="menuBGLeft"></div><div class="menuBGRepeat"><a href="http://www.eurotrials.com/index.php?m=23&amp;idioma=1"><div style="overflow: visible; width: auto;">Notícias</div></a></div><div class="menuBGRight"></div></div>			</div>
+		</div>
+		<div class="contentContainer">
+			<div class="center">
+				<div class="outrasContent"><div class="outrasContentTopo"><div class="outrasLeft"><div class="outrasTitulo"><img src="index.php_files/pagina_titulo_100_1.gif" alt="Eurotrials" title="Eurotrials" border="0"></div><div class="outrasSubtitulo"><img src="index.php_files/pagina_subtitulo_100_1.gif" alt="Eurotrials" title="Eurotrials" border="0"></div><div class="outrasText"><div>O
+Brasil tem um dos maiores mercados farmacêuticos, e com mais rápido
+crescimento, do mundo. Os nossos clientes sabem que o Brasil está
+também em rápida expansão em Pesquisa Clínica. <br>
+<br>
+Os clientes da Eurotrials descobriram que o Brasil oferece vantagens
+únicas durante todo o processo de um ensaio clínico. Grandes populações
+e altamente concentradas; baixo custo por doente e serviços de saúde de
+alta qualidade, motivos que combinados contribuiem para tornar o Brasil
+no local ideal para estudos de várias áreas terapêuticas.<br>
+<br>
+Os serviços da Eurotrials interessam a empresas que antecipam a
+comercialização no Brasil e precisam de dados locais, ou simplesmente
+querem ter a certeza que conseguem recrutar doentes suficientes para
+completar o Estudo.<br>
+<br>
+<strong>TOP 5 DAS VANTAGENS PARA ESCOLHA DO BRASIL<br>
+<br>
+1.&nbsp;&nbsp;&nbsp;&nbsp; 5º País mais populoso - mais de 190 milhões de habitantes<br>
+2.&nbsp;&nbsp;&nbsp;&nbsp; 80% da população está concentrada nas grandes áreas <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; metropolitanas<br>
+3.&nbsp;&nbsp;&nbsp;&nbsp; Hospitais especializados em determinadas doenças - velocidade <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e simplicidade no recrutamento<br>
+4.&nbsp;&nbsp;&nbsp;&nbsp; O acesso a grandes populações de doentes - Oncologia, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sistema Nervoso Central, Doenças&nbsp;Cardiovasculares, Diabetes<br>
+5.&nbsp;&nbsp;&nbsp; Números significativos doentes não tratados / novos diagnósticos</strong></div></div></div><div class="actuacaoRight"><div class="actuacaoImgGlobal"><div class="actuacaoImg"><img src="index.php_files/pagina_imagem_100_1.jpg" alt="Eurotrials" title="Eurotrials" border="0"></div><div class="actuacaoImgTxt"></div></div></div></div><div class="outrasContentBottom"><div style="background: transparent url(img/casuistica_close.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;" class="barraBrasil2" id="barraBrasil1" onclick="activarAccordion('brasilContent1');"><div class="barraAccordionTexto2">Porque é que o Brasil está com este crescimento? </div></div><div class="brasilContent" id="brasilContent1" style="border-top: medium none; border-bottom: medium none; overflow: hidden; display: none; padding-top: 0px; padding-bottom: 0px; visibility: hidden; opacity: 0; height: 0px;"><div class="brasilContentTxt"><div class="brasilTxt"><p>Em
+Julho de 2008, o&nbsp;órgão regulamentar Brasileiro, a ANVISA, mudou o
+processo regulamentar para permitir que os patrocinadores e CROs possam
+solicitar aprovações, a várias Comissões de Ética, em simultâneo com a
+submissão à ANVISA, e não sequencialmente. O processo&nbsp;de aprovação
+acelerou,&nbsp;reduzindo o tempo desde o&nbsp;Protocolo&nbsp;Final até
+à primeira visita do primeiro doente.<br>
+<br>
+Mesmo antes destas alterações, os Patrocinadores, reconheciam que o
+Brasil&nbsp;, com a sua grande população de&nbsp;doentes, é não só
+um&nbsp;mercado importante mas também um lugar excelente para estudos
+clínicos. Ter, pelo&nbsp;menos, um centro Brasileiro num estudo
+global,&nbsp;garante que o recrutamento&nbsp;de doentes não será um
+problema.&nbsp;<br>
+<br>
+O&nbsp;Brasil é um país menos complexo do&nbsp;que muitos outros
+mercados emergentes. Ao contrário da Europa e&nbsp;Ásia, todos os
+doentes Brasileiros falam a mesma língua, pelo que a tradução em vários
+idiomas não&nbsp;é um problema.<br>
+<br>
+Outra&nbsp;vantagem do Brasil é a sua localização no Hemisfério
+Sul,&nbsp;que o torna ideal para permitir que estudos sazonais
+continuem todo&nbsp;o ano, quando combinados com centros do
+Hemisfério&nbsp;Norte.</p></div></div></div><div style="background: transparent url(img/casuistica_close.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;" class="barraBrasil2" id="barraBrasil2" onclick="activarAccordion('brasilContent2');"><div class="barraAccordionTexto2">Número de estudos no Brasil</div></div><div class="brasilContent" id="brasilContent2" style="border-top: medium none; border-bottom: medium none; overflow: hidden; display: none; padding-top: 0px; padding-bottom: 0px; visibility: hidden; opacity: 0; height: 0px;"><div class="brasilContentTxt"><div class="brasilTxt2"><p><strong>A Pesquisa Clínica está a prosperar no Brasil&nbsp;</strong><br>
+<br>
+Em 2008, o&nbsp;custo por doente para testes no Brasil foi,
+aproximadamente, 30%&nbsp;inferior ao custo nos Estados Unidos da
+América. Mais importante, o Brasil possui uma grande vantagem no
+recrutamento de doentes para oncologia, sistema nervoso central,
+doenças cardiovasculares e diabetes. Devido a isso, espera-se que o
+Brasil venha a receber grande parte dos ensaios clínicos realizados
+fora dos Estados Unidos da América.<br>
+<br>
+Graças à diversidade étnica, ao heterogéneo perfil epidemiológico
+e&nbsp;há vontade de participar em programs de ensaio clínico, o Brasil
+é um mercado extremamente atraente para a investigação clínica. Acresce
+a isso, a sua taxa de crescimento de mercado, que se espera seja de
+aproximadamente 12% em 2009, e temos um país emergente com potencial
+para contribuir com um grande número de doentes, que estão ansiosos
+para participar em pesquisas clínicas, num mercado que se espera supere
+o cresciemnto nos Estados Unidos da América em quase 10%.<br>
+<br>
+Patrocinadores de todo o mundo reconhecem a importância do mercado
+Brasileiro e a crescente oportunidade para realizar estudos no Brasil.</p></div><div class="brasilImg"><img src="index.php_files/brasil_2_1.jpg" alt="Eurotrials" title="Eurotrials" border="0"></div></div></div><div style="background: transparent url(img/casuistica_close.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;" class="barraBrasil2" id="barraBrasil3" onclick="activarAccordion('brasilContent3');"><div class="barraAccordionTexto2">Demografia do Brasil</div></div><div class="brasilContent" id="brasilContent3" style="border-top: medium none; border-bottom: medium none; overflow: hidden; display: none; padding-top: 0px; padding-bottom: 0px; visibility: hidden; opacity: 0; height: 0px;"><div class="brasilContentTxt"><div class="brasilTxt2"><p><strong>Capacidade e diversidade</strong></p>
+<p>O&nbsp;Brasil é o 5º&nbsp;&nbsp;país mais populoso do mundo
+e&nbsp;está ainda a crescer, com uma estimativa de 190 milhões de
+pessoas. Oitenta por cento dessas pessoas estão localizadas na
+proximidade de uma&nbsp;grande área metropolitana, tornado-se mais
+fácil para eles ter acesso a um ensaio clínico. A população Brasileira
+também é muito diversificada, incluindo jovens e idosos. Estima-se que
+25%&nbsp;da&nbsp;população&nbsp;está&nbsp;abaixo dos 14 anos
+de&nbsp;idade, tornando-se um excelente local para os ensaios
+pediátricos.<br>
+<br>
+O&nbsp;Brasil tem a maior população de origem étcnia&nbsp;Japonesa,
+fora do Japão, e os dados dos&nbsp;estudos relizados no Brasil
+são&nbsp;aceitáveis para o Ministério da Saúde Japonês, fazendo do
+Brasil um local&nbsp;excelente para estudos "bridging". O&nbsp;Brastil
+tem,&nbsp;também, uma elevada incidência em&nbsp;certas doenças raras e
+tropicais, permitindo a investigação em áreas como o dengue e a malária.<br>
+<br>
+Por causa do interesse em receber o melhor cuidado médico
+possível,&nbsp;a preços acessíveis, os doentes estão ansiosos em
+participar em ensaios&nbsp;clínicos e a Eurotrials tem uma taxa de
+retenção de doentes superior a 90%.<br>
+&nbsp;</p></div><div class="brasilImg"><img src="index.php_files/brasil_3_1.jpg" alt="Eurotrials" title="Eurotrials" border="0"></div></div></div><div style="background: transparent url(img/casuistica_close.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;" class="barraBrasil2" id="barraBrasil4" onclick="activarAccordion('brasilContent4');"><div class="barraAccordionTexto2">A Experiência da Eurotrials Brasil</div></div><div class="brasilContent" id="brasilContent4" style="border-top: medium none; border-bottom: medium none; overflow: hidden; display: none; padding-top: 0px; padding-bottom: 0px; visibility: hidden; opacity: 0; height: 0px;"><div class="brasilContentTxt"><div class="brasilTxt"><p><u>Experiência terapêutica<br>
+</u><br>
+A&nbsp;Eurotrials Brasil concentra-se principalmente em estudos nas seguintes&nbsp;áreas terapêuticas:</p>
+<ul>
+    <li><strong>Oncologia:</strong>&nbsp;pâncreas, pulmão, mama, próstata</li>
+    <li><strong>Sistema Nervoso Central e Neurologia:</strong>&nbsp;AVC, Alzheimer, demência, epilepsia</li>
+    <li><strong>Cardiovascular:&nbsp;</strong>AVC, insuficiência cardíaca, angina, hipertensão</li>
+    <li><strong>Outras áreas com experiência relevante:&nbsp;</strong>Endocrinologia, Dermatologia, Oftalmologia, Doenças Tropicais, Doenças Pulmonares, Doenças Genéticas, Pediatria<br>
+    &nbsp;</li>
+</ul>
+<p>&nbsp;</p></div></div></div><div style="background: transparent url(img/casuistica_close.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;" class="barraBrasil2" id="barraBrasil5" onclick="activarAccordion('brasilContent5');"><div class="barraAccordionTexto2">Serviços Clínicos no Brasil</div></div><div class="brasilContent" id="brasilContent5" style="border-top: medium none; border-bottom: medium none; overflow: hidden; display: none; padding-top: 0px; padding-bottom: 0px; visibility: hidden; opacity: 0; height: 0px;"><div class="brasilContentTxt"><div class="brasilTxt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Desenho do Estudo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Protocolo / Desenvolvimento de CRF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Selecção de Investigadores / Qualificação de centros<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Gestão de Projecto<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Assuntos Regulamentares / Importação de Fármacos<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Monitorização<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Gestão de Dados<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Formação de Monitores<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Armazenagem de medicação e materiais de estudo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Qualidade - Consultoria e Auditoria<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Epidemiiologia / <em>Health Outcomes Research</em><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&#8226;&nbsp;Gestão de Risco<br></div></div></div><div style="background: transparent url(img/casuistica_close.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;" class="barraBrasil2" id="barraBrasil6" onclick="activarAccordion('brasilContent6');"><div class="barraAccordionTexto2">A equipa da Eurotrials Brasil</div></div><div class="brasilContent" id="brasilContent6" style="border-top: medium none; border-bottom: medium none; overflow: hidden; display: none; padding-top: 0px; padding-bottom: 0px; visibility: hidden; opacity: 0; height: 0px;"><div class="brasilContentTxt"><div class="brasilTxt2"><p><strong>Profissionais Qualificados</strong></p>
+<p>A equipa Brasileira, não só é multilingue, como possui diferentes
+aptidões e experiências, sendo um grupo exclusivo de profissionais com
+amplo conhecimento e experiência. <br>
+<br>
+&#8226;&nbsp;4 MDs<br>
+&#8226;&nbsp;18 Elementos do Corpo Clínico<br>
+&#8226;&nbsp;5 Colaboradores em Assuntos Regulamentares<br>
+&#8226;&nbsp;1 Exportação / Importação&nbsp; <em>Associate</em><br>
+&#8226;&nbsp;1 <em>Business Development Manager</em></p>
+<p>Devido à experiência e aos conhecimentos da equipa da Eurotrials,
+somos capazes de assumir e desenvolver, com sucesso, qualquer etapa do
+processo de investigação clinica.</p></div><div class="brasilImg"><img src="index.php_files/brasil_6_1.jpg" alt="Eurotrials" title="Eurotrials" border="0"></div></div></div><div style="background: transparent url(img/casuistica_close.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous;" class="barraBrasil2" id="barraBrasil7" onclick="activarAccordion('brasilContent7');"><div class="barraAccordionTexto2">Estudos de grande sucesso no Brasil</div></div><div class="brasilContent" id="brasilContent7" style="border-top: medium none; border-bottom: medium none; overflow: hidden; display: none; padding-top: 0px; padding-bottom: 0px; visibility: hidden; opacity: 0; height: 0px;"><div class="brasilContentTxt"><div class="brasilTxt">&nbsp;
+<table auto="\&quot;\\&quot;\\\\&quot;\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\&quot;\\\\&quot;\\&quot;\&quot;" medium="\&quot;\\&quot;\\\\&quot;\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\&quot;\\\\&quot;\\&quot;\&quot;" border="\&quot;\\&quot;\\\\&quot;\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;0\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\&quot;\\\\&quot;\\&quot;\&quot;" cellpadding="\&quot;\\&quot;\\\\&quot;\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;0\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\&quot;\\\\&quot;\\&quot;\&quot;" cellspacing="\&quot;\\&quot;\\\\&quot;\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;0\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\&quot;\\\\&quot;\\&quot;\&quot;">
+    <tbody>
+        <tr>
+            <td valign="\&quot;\\&quot;\\\\&quot;\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;top\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\&quot;\\\\&quot;\\&quot;\&quot;">
+            <div><span><strong>&nbsp;
+Recuperação de
+Estudo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            &nbsp; Fase 3</strong><br>
+            </span><b><span><br>
+            </span></b><span>&nbsp; Data de Inicio do Estudo: <br>
+            &nbsp; 2006<br>
+            <br>
+            &nbsp; Data de&nbsp;Fim do Estudo: <br>
+            &nbsp; em curso<br>
+            <br>
+            &nbsp; Área Terapêutica:&nbsp;Cerebrovascular&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            &nbsp; Número de pacientes: 550<br>
+            &nbsp; Número de centros: 9</span></div>
+            <div>&nbsp;</div>
+            </td>
+            <td valign="\&quot;\\&quot;\\\\&quot;\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;top\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\&quot;\\\\&quot;\\&quot;\&quot;">
+            <div><strong><span>&nbsp; Estudo&nbsp;de Recrutamento Rápido&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+            &nbsp; Fase 4<br>
+            </span></strong><b><span><br>
+            </span></b><span>&nbsp; <span>Data de Inicio do Estudo</span>: <br>
+            &nbsp; 2007<br>
+            <br>
+            &nbsp; <span>Data de Fim do Estudo</span>: <br>
+            &nbsp; Setembro de 2008&nbsp;&nbsp;&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            &nbsp;&nbsp;Área Terapêutica:&nbsp;Cardiologia<br>
+            &nbsp; Número de pacientes: 247<br>
+            &nbsp; Número de centros: 4</span></div>
+            </td>
+            <td valign="\&quot;\\&quot;\\\\&quot;\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;top\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&quot;\\\\\\\\\\\\\\\\&quot;\\\\\\\\&quot;\\\\&quot;\\&quot;\&quot;">
+            <div><strong><span>&nbsp; Estudo Difícil (doentes raros)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+            &nbsp; Fase 3<br>
+            </span></strong><span><br>
+            &nbsp;&nbsp;</span><span>Data de Inicio do Estudo</span>: <br>
+            &nbsp; Dezembro de 2004<br>
+            <br>
+            &nbsp; <span>Data de Fim do Estudo</span>:&nbsp;<br>
+            &nbsp; Novembro de 2007<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            &nbsp;&nbsp;Área Terapêutica:&nbsp;Oncologia<br>
+            &nbsp; Número de pacientes:&nbsp;21&nbsp; <br>
+            &nbsp; Número de centros: 9</div>
+            </td>
+        </tr>
+    </tbody>
+</table></div></div></div></div></div>			</div>
+			
+			<div class="noticiasContent"><a href="http://www.eurotrials.com/index.php?m=23&amp;idioma=1"><div class="noticiasBarra"></div></a><div class="noticiasCenter"><div class="noticiasImg"><a href="http://www.eurotrials.com/index.php?m=19&amp;idioma=1"><img src="index.php_files/destaquePlanoFormacao.jpg" alt="Eurotrials" title="Eurotrials" border="0"></a></div><div class="noticiasEspaco"> </div><div class="noticiasText"><div class="noticiasGlobal"><div class="noticiasTextTitulo">5º Simpósio Nacional de Cancro Digestivo</div><div class="noticiasTextTxt"></div></div><div class="noticiasTextMais"><a href="http://www.eurotrials.com/index.php?m=23&amp;idioma=1&amp;n=23">Mais</a></div></div><div class="noticiasEspaco"> </div><div class="noticiasText"><div class="noticiasGlobal"><div class="noticiasTextTitulo">Estudo da Prevalência de Doença Arterial Periférica em Portugal</div><div class="noticiasTextTxt"></div></div><div class="noticiasTextMais"><a href="http://www.eurotrials.com/index.php?m=23&amp;idioma=1&amp;n=19">Mais</a></div></div><div class="noticiasText"><div class="noticiasGlobal"><div class="noticiasTextTitulo">Representação Eurotrials nos EUA</div><div class="noticiasTextTxt"></div></div><div class="noticiasTextMais"><a href="http://www.eurotrials.com/index.php?m=23&amp;idioma=1&amp;n=13">Mais</a></div></div><div class="noticiasEspaco"> </div><div class="noticiasText"><div class="noticiasGlobal"><div class="noticiasTextTitulo">Brasil unifica estudos sobre o Cancro </div><div class="noticiasTextTxt"></div></div><div class="noticiasTextMais"><a href="http://www.eurotrials.com/index.php?m=23&amp;idioma=1&amp;n=17">Mais</a></div></div><div class="noticiasEspaco"> </div><div class="noticiasText"><div class="noticiasGlobal"><div class="noticiasTextTitulo">EUROTRIALS é uma das 20 melhores empresas Portuguesas</div><div class="noticiasTextTxt"></div></div><div class="noticiasTextMais"><a href="http://www.eurotrials.com/index.php?m=23&amp;idioma=1&amp;n=5">Mais</a></div></div></div></div>
+			
+			<div class="footerContent"><div class="footerBarraTop"><div class="footerBarraTopLeft"><a href="http://www.eurotrials.com/index.php?m=22&amp;idioma=1" id="menuFooter0" onmouseover='changeColorTxt("menuFooter0");' onmouseout='returnColorTxt("menuFooter0");'>Contactos</a></div><div class="footerBarraTopRight"><a href="http://www.eurotrials.com/index.php?m=11&amp;idioma=1" id="euro1" onmouseover='changeColorTxt("euro1");' onmouseout='returnColorTxt("euro1");'>Eurotrials América Latina</a></div><div class="footerBarraTopRight"><a href="http://www.eurotrials.com/index.php?m=10&amp;idioma=1" id="euro2" onmouseover='changeColorTxt("euro2");' onmouseout='returnColorTxt("euro2");'>Eurotrials Europa</a></div></div><div class="footerCenter"><div class="mapaSite"><div class="mapaSiteTop">Eurotrials</div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=0&amp;idioma=1" id="mapaItem0" onmouseover='changeColorTxt("mapaItem0");' onmouseout='returnColorTxt("mapaItem0");'>Home</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=6&amp;idioma=1" id="mapaItem1" onmouseover='changeColorTxt("mapaItem1");' onmouseout='returnColorTxt("mapaItem1");'>Apresentação</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=10&amp;idioma=1" id="mapaItem2" onmouseover='changeColorTxt("mapaItem2");' onmouseout='returnColorTxt("mapaItem2");'>Europa</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=11&amp;idioma=1" id="mapaItem3" onmouseover='changeColorTxt("mapaItem3");' onmouseout='returnColorTxt("mapaItem3");'>América Latina</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=100&amp;idioma=1" id="mapaItem4" onmouseover='changeColorTxt("mapaItem4");' onmouseout='returnColorTxt("mapaItem4");'>Brasil</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=23&amp;idioma=1" id="mapaItem5" onmouseover='changeColorTxt("mapaItem5");' onmouseout='returnColorTxt("mapaItem5");'>Notícias</a></div></div><div class="mapaSite"><div class="mapaSiteTop">Serviços</div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=20&amp;idioma=1" id="mapaItem6" onmouseover='changeColorTxt("mapaItem6");' onmouseout='returnColorTxt("mapaItem6");'>Investigação e Desenvolvimento</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=15&amp;idioma=1" id="mapaItem7" onmouseover='changeColorTxt("mapaItem7");' onmouseout='returnColorTxt("mapaItem7");'>Ensaios Clínicos</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=16&amp;idioma=1" id="mapaItem8" onmouseover='changeColorTxt("mapaItem8");' onmouseout='returnColorTxt("mapaItem8");'>Epidemiologia</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=14&amp;idioma=1" id="mapaItem9" onmouseover='changeColorTxt("mapaItem9");' onmouseout='returnColorTxt("mapaItem9");'>Gestão de Dados</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=13&amp;idioma=1" id="mapaItem10" onmouseover='changeColorTxt("mapaItem10");' onmouseout='returnColorTxt("mapaItem10");'>Bioestatística</a></div></div><div class="mapaSite"><div class="mapaSiteTop"></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=12&amp;idioma=1" id="mapaItem11" onmouseover='changeColorTxt("mapaItem11");' onmouseout='returnColorTxt("mapaItem11");'>Assuntos Regulamentares</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=18&amp;idioma=1" id="mapaItem12" onmouseover='changeColorTxt("mapaItem12");' onmouseout='returnColorTxt("mapaItem12");'>Farmacovigilância</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=17&amp;idioma=1" id="mapaItem13" onmouseover='changeColorTxt("mapaItem13");' onmouseout='returnColorTxt("mapaItem13");'>Fármaco-Economia</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=21&amp;idioma=1" id="mapaItem14" onmouseover='changeColorTxt("mapaItem14");' onmouseout='returnColorTxt("mapaItem14");'>Qualidade</a></div><div class="mapaSiteItem"><a href="http://www.eurotrials.com/index.php?m=19&amp;idioma=1" id="mapaItem15" onmouseover='changeColorTxt("mapaItem15");' onmouseout='returnColorTxt("mapaItem15");'>Formação</a></div></div><div class="certicacao"><div class="certicacaoTxt">Certificações</div><div class="certicacaoImg"><img src="index.php_files/certificacaoHome.jpg" alt="Eurotrials" title="Eurotrials" border="0"></div></div></div><div class="footerBarraBottom"><div class="footerBarraBottomLeft">Eurotrials © 2008</div><div class="footerBarraCenter"><a href="mailto:sara.lopes@eurotrials.pt">Se quiser participar ou obter mais informação sobre testes de legibilidade dos folhetos Informativos <span style="text-decoration: underline;">clique aqui</span>.</a></div><div class="footerBarraBottomRight"><a href="http://www.bycom.com.pt/" target="_blank"><img src="index.php_files/by2.jpg" alt="By" title="By" border="0"></a></div></div></div>			
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	//<![CDATA[
+	
+	function selectIdioma()
+	{
+		
+		window.location = "./index.php?m="+100+"&idioma="+this.value;
+	}
+	
+	window.addEvent('domready',function() {
+		$("caixaIdioma2").addEvent("change",selectIdioma);
+	});
+	
+	//]]>
+	</script>
+
+<script src="index.php_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-305883-43";
+urchinTracker();
+</script>
+	
+</body></html>
