@@ -1,1 +1,1 @@
-<% response.sendRedirect("/eurotrialsmonitorservlet"); %>
+<% response.sendRedirect("/questionnaire"); %>
