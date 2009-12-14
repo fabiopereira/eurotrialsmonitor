@@ -7,7 +7,7 @@
 	                       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 	<context:annotation-config/>
-	<context:component-scan base-package="rma.flp" />
+	<context:component-scan base-package="me.fabiopereira.eurotrialsmonitor" />
 
 
 	<bean class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean">
@@ -15,7 +15,13 @@
 		<property name="persistenceManagerFactoryName" value="transactions-optional"/>
 	</bean>
 
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="monitorLoginInterceptor"/>
+			</list>
+		</property>
+	</bean> 
 	
 	<bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
 		<property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
