@@ -1,0 +1,30 @@
+<html>
+<link rel="stylesheet" rev="stylesheet" href="build-dashboard-radiator-eurotrials.css" media="screen">
+<head><title>Build Dashboard Radiator - Eurotrials</title></head>
+<body>
+<div id="statuses">
+
+    <div id="logo">
+    	<img src="logo.jpg"/>
+    </div>
+
+    <div id="buildEurotrials" class="status hudson">
+            <a class="subject" href="http://localhost:8080/hudson/job/TestAnt">Build</a>
+        <br/>
+        <span class="statusInWords"></span><br/>
+        <span class="statusDetails">expected duration is <span class="expectedDuration">1</span> minutes</span>
+    </div>
+
+    <div class="localEurotrials">
+			<span id="localEurotrials" class="status ping">
+                <a class="subject" href="http://localhost:8888/monitorLogin">Local</a>
+			</span>
+    </div>
+    <div class="status">
+			<span id="productionEurotrials" class="status ping">
+                <a class="subject" href="http://eurotrialsmonitor.appspot.com/monitorLogin">Production</a>
+			</span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>	
+
+
+
+<meta name="keywords" content="Eurotrials | Scientific Consultants">
+<meta name="description" content="Eurotrials | Scientific Consultants">
+<meta http-equiv="Author" content="BY COM - Design, New Media, Ambientes e Advertising (www.bycom.com.pt)">
+<meta http-equiv="Corporate" content="Eurotrials">
+<meta http-equiv="Completed-Date" content="30/JUL/2008">
+<meta http-equiv="Revision-Date" content="">
+<meta http-equiv="Revision-Version" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Eurotrials | Scientific Consultants</title>
+
+<link href="index.php_files/style.css" rel="stylesheet" type="text/css">
+<!-- <link href="publish.css" rel="stylesheet" type="text/css" /> -->
+
+<script type="text/javascript" src="index.php_files/mootools-core.js"></script>
+<script type="text/javascript" src="index.php_files/mootools-more.js"></script>
+<script type="text/javascript" src="index.php_files/submenu.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+
+
+function validateForm()
+{
+	var errMsg = '';
+	
+	if($('nomefld').value == '')
+		errMsg = 'Indique o Nome\n';
+		
+	if($('cursofld').value == '')
+		errMsg += 'Indique o Curso\n';
+		
+	if($('emailfld').value == '')
+		errMsg += 'Indique o Email\n';
+	
+	if($('recibofld').value == '')
+		errMsg += 'Indique o Nome para o recibo\n';
+			
+	if($('niffld').value == '')
+		errMsg += 'Indique o NIF\n';
+	
+	if(errMsg != '')
+	{
+		alert(errMsg);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+
+function changeColorTxt(item)
+{
+	
+	$(item).setStyle('color','#ce0e48');
+}
+
+function returnColorTxt(item)
+{
+	$(item).setStyle('color','#666666');
+}
+
+
+function changeArea(imgArea,nomeArea,introArea,areaId)
+{
+	imagem = 'img/' + imgArea;
+
+	$('areaImg').src = imagem;
+	
+	$('areaTitulo').innerHTML = nomeArea;
+	
+	$('areaTexto').innerHTML = introArea;
+	
+	$(areaId).setStyle('color','#ce0e48');
+}
+
+function returnArea(areaId)
+{
+	$(areaId).setStyle('color','#ffffff');
+}
+
+function changeInvestigacao(elementToShow)
+{
+
+	$('investiga1').setStyle("display","none");
+	$('investiga2').setStyle("display","none");
+	$('investiga3').setStyle("display","none");
+	$('investiga4').setStyle("display","none");
+	$('investiga5').setStyle("display","none");
+	$('investiga6').setStyle("display","none");
+	elementToShow.setStyle("display","block");
+}
+
+
+function changeDestaque(imgDestaque,titleDestaque,contDestaque,legenda)
+{
+	if (legenda == 0)
+	{
+		$$('.destaqueTextBorderTop').setStyle('background','none');
+		$$('.destaqueTextBorderBottom').setStyle('background','none');
+		$$('.destaqueTextMeio').setStyle('background','none');
+		$$('.destaqueTextBorderLeft').setStyle('background','none');
+		$$('.destaqueTextBorderRight').setStyle('background','none');
+		
+		destaque = 'img/' + imgDestaque;
+
+		$$('.centerLeft').setStyle('background','url("'+destaque+'") no-repeat');
+		$$('.centerLeft').setStyle('background-position','5px 126px');
+		
+		$('destaqueTextTitle').innerHTML = titleDestaque;
+	}
+
+	else
+	{
+		$$('.destaqueTextBorderTop').setStyle('background','url("img/destaqueTextBorderTop.png") no-repeat');
+		$$('.destaqueTextBorderBottom').setStyle('background','url("img/destaqueTextBorderBottom.png") no-repeat');
+		$$('.destaqueTextMeio').setStyle('background','url("img/destaqueTextBg.jpg") repeat-y');
+		$$('.destaqueTextBorderLeft').setStyle('background','url("img/destaqueTextBorderLeft.png") no-repeat');
+		$$('.destaqueTextBorderRight').setStyle('background','url("img/destaqueTextBorderRight.png") no-repeat');
+
+		destaque = 'img/' + imgDestaque;
+
+		$$('.centerLeft').setStyle('background','url("'+destaque+'") no-repeat');
+		$$('.centerLeft').setStyle('background-position','5px 126px');
+	
+		$('destaqueTextTitle').innerHTML = titleDestaque;
+	
+		//$('destaqueTextTxt').innerHTML = contDestaque;
+	
+	}
+}
+
+
+function cycle(img,txt,num,anterior)
+{
+	$$('.centerLeft').setStyle('background','url("img/'+img+'") no-repeat');
+	$$('.centerLeft').setStyle('background-position','5px 126px');
+		
+	$('destaqueTextTitle').innerHTML = txt;
+	
+	$('number'+anterior).setStyle('color','#ffffff');
+	$('number'+num).setStyle('color','#ce0e48');
+
+}
+
+var currentImageIdx = 0;
+var imagesArr = null;
+var textosArr = null;
+var anterior = 1;
+
+function rotateImage()
+{
+	cycle(imagesArr[currentImageIdx],textosArr[currentImageIdx],currentImageIdx,anterior);
+	currentImageIdx++;
+	anterior = currentImageIdx -1;
+	if(currentImageIdx == imagesArr.length-1)
+		currentImageIdx=0;
+}
+
+function mudaDestaque(imagens, textos)
+{
+	imagesArr = imagens.split(',');
+	textosArr = textos.split(',');
+	rotateImage.periodical(3000);
+}
+
+
+function acordeaoCalendario()
+{
+	var togglers = $$('.barraCalendario');
+	var elements = $$('.calendarioContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/calendario_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/calendario_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoCalendario);
+
+
+function acordeaoFicha()
+{
+	var togglers = $$('.barraFicha');
+	var elements = $$('.fichaContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/ficha_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/ficha_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoFicha);
+
+
+function acordeaoServicos()
+{
+	var togglers = $$('.barraServicos');
+	var elements = $$('.servicosContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/servicos_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/servicos_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoServicos);
+
+
+function acordeaoCasuistica()
+{
+	var togglers = $$('.barraCasuistica');
+	var elements = $$('.casuisticaContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/casuistica_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/casuistica_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoCasuistica);
+
+
+function acordeaoAmerica()
+{
+	var togglers = $$('.barraAmerica');
+	var elements = $$('.americaContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/barraAmerica_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/barraAmerica_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoAmerica);
+
+
+
+function acordeaoBrasil()
+{
+	var togglers = $$('.barraBrasil2');
+	var elements = $$('.brasilContent');
+	if(togglers != null && elements != null)
+	{
+		var accordion = new Accordion (togglers, elements, {
+			display: -1,
+			alwaysHide: true,
+			onActive: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/casuistica_open.jpg") no-repeat');
+			},
+			onBackground: function (togglers, elements){
+				togglers.setStyle('background', 'url("img/casuistica_close.jpg") no-repeat');
+			}
+		});
+	}
+}
+window.addEvent('domready',acordeaoBrasil);
+
+
+
+/*function acordeaoEquipaAmerica()
+{
+	var togglers = $$('.barraEquipaAmerica');
+	var elements = $$('.equipaAmericaContent');
+	var accordion = new Accordion (togglers, elements, {
+		display: -1,
+		alwaysHide: true,
+		onActive: function (togglers, elements){
+			togglers.setStyle('background', 'url("img/equipaAmericaLatinaBarra_open.jpg") no-repeat');
+		},
+		onBackground: function (togglers, elements){
+			togglers.setStyle('background', 'url("img/equipaAmericaLatinaBarra_close.jpg") no-repeat');
+		}
+	});
+}
+window.addEvent('domready',acordeaoEquipaAmerica);
+*/
+
+/*function acordeaoEquipa()
+{
+	var togglers = $$('.barraEquipa');
+	var elements = $$('.equipaContent');
+	var accordion = new Accordion (togglers, elements, {
+		display: -1,
+		alwaysHide: true,
+		onActive: function (togglers, elements){
+			togglers.setStyle('background', 'url("img/equipaBarra_open.jpg") no-repeat');
+		},
+		onBackground: function (togglers, elements){
+			togglers.setStyle('background', 'url("img/equipaBarra_close.jpg") no-repeat');
+		}
+	});
+}
+window.addEvent('domready',acordeaoEquipa);
+*/
+
+function activarAccordion(contentId)
+{
+	obj = document.getElementById(contentId);
+
+	if(obj.style.display == 'none')
+	{
+		obj.style.display = 'block';
+	}
+}
+
+
+function changeForm(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+}
+
+function restoreForm(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+}
+
+
+function changeImg(obj,imageName)
+{
+	obj.src = imageName;
+}
+
+
+function changeInvestiga(id,idClass,idClassOn)
+{
+	$('investigacaoClienteItem1').style.display = 'block';
+	$('investigacaoClienteItem2').style.display = 'block';
+	$('investigacaoClienteItem3').style.display = 'block';
+	$('investigacaoClienteItem4').style.display = 'block';
+	$('investigacaoClienteItem5').style.display = 'block';
+
+	$('investigacaoClienteItem1On').style.display = 'none';
+	$('investigacaoClienteItem2On').style.display = 'none';
+	$('investigacaoClienteItem3On').style.display = 'none';
+	$('investigacaoClienteItem4On').style.display = 'none';
+	$('investigacaoClienteItem5On').style.display = 'none';
+
+	$('investiga1').style.display = 'none';
+	$('investiga2').style.display = 'none';
+	$('investiga3').style.display = 'none';
+	$('investiga4').style.display = 'none';
+	$('investiga5').style.display = 'none';
+	$('investiga6').style.display = 'none';
+
+	obj = document.getElementById(idClass);
+	obj.style.display = 'none';
+
+	obj2 = document.getElementById(idClassOn);
+	obj2.style.display = 'block';
+
+/*	$('fase2').src= 'img/ID_consultoria.jpg';
+	$('fase3').src= 'img/ID_consultoriaProduto.jpg';
+	$('fase4').src= 'img/ID_preclinico.jpg';
+	$('fase5').src= 'img/ID_clinico.jpg';
+	$('fase6').src= 'img/ID_investigacao.jpg';
+*/
+
+	$('fase2').style.display = 'block';
+	$('fase3').style.display = 'block';
+	$('fase4').style.display = 'block';
+	$('fase5').style.display = 'block';
+	$('fase6').style.display = 'block';
+
+	$('fase2On').style.display = 'none';
+	$('fase3On').style.display = 'none';
+	$('fase4On').style.display = 'none';
+	$('fase5On').style.display = 'none';
+	$('fase6On').style.display = 'none';
+
+	$('breadcrumb2').style.display = 'none';
+	$('breadcrumb3').style.display = 'none';
+	$('breadcrumb4').style.display = 'none';
+	$('breadcrumb5').style.display = 'none';
+	$('breadcrumb6').style.display = 'none';
+
+
+
+	if (id == 'cli1' || id == 'cli2')
+	{
+		$('fase2').style.display = 'none';
+		$('fase3').style.display = 'none';
+		$('fase4').style.display = 'none';
+		$('fase5').style.display = 'none';
+		$('fase6').style.display = 'none';
+
+		$('fase2On').style.display = 'block';
+		$('fase3On').style.display = 'block';
+		$('fase4On').style.display = 'block';
+		$('fase5On').style.display = 'block';
+		$('fase6On').style.display = 'block';
+
+		$('fasesBreadcrumbContent').style.display = 'block';
+
+		$('breadcrumb2').style.display = 'block';
+		$('breadcrumb3').style.display = 'block';
+		$('breadcrumb4').style.display = 'block';
+		$('breadcrumb5').style.display = 'block';
+		$('breadcrumb6').style.display = 'block';
+	}
+	else if (id == 'cli3')
+	{
+		$('fase2').style.display = 'none';
+		$('fase4').style.display = 'none';
+		$('fase5').style.display = 'none';
+		$('fase6').style.display = 'none';
+
+		$('fase2On').style.display = 'block';
+		$('fase4On').style.display = 'block';
+		$('fase5On').style.display = 'block';
+		$('fase6On').style.display = 'block';
+
+		$('fasesBreadcrumbContent').style.display = 'block';
+
+		$('breadcrumb2').style.display = 'block';
+		$('breadcrumb4').style.display = 'block';
+		$('breadcrumb5').style.display = 'block';
+		$('breadcrumb6').style.display = 'block';
+	}
+	else if (id == 'cli4')
+	{
+		$('fase3').style.display = 'none';
+		$('fase6').style.display = 'none';
+
+		$('fase3On').style.display = 'block';
+		$('fase6On').style.display = 'block';
+
+		$('fasesBreadcrumbContent').style.display = 'block';
+
+		$('breadcrumb3').style.display = 'block';
+		$('breadcrumb6').style.display = 'block';
+	}
+	else if (id == 'cli5')
+	{
+		$('fase3').style.display = 'none';
+
+		$('fase3On').style.display = 'block';
+
+		$('fasesBreadcrumbContent').style.display = 'block';
+
+		$('breadcrumb3').style.display = 'block';
+	}
+}
+function restoreInvestiga(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+	
+	if (id == 'cli1' || id == 'cli2')
+	{
+		$('fase2').src= 'img/ID_consultoria.jpg';
+		$('fase3').src= 'img/ID_consultoriaProduto.jpg';
+		$('fase4').src= 'img/ID_preclinico.jpg';
+		$('fase5').src= 'img/ID_clinico.jpg';
+		$('fase6').src= 'img/ID_investigacao.jpg';
+	}
+	else if (id == 'cli3')
+	{
+		$('fase2').src= 'img/ID_consultoria.jpg';
+		$('fase4').src= 'img/ID_preclinico.jpg';
+		$('fase5').src= 'img/ID_clinico.jpg';
+		$('fase6').src= 'img/ID_investigacao.jpg';
+	}	
+	else if (id == 'cli4')
+	{
+		$('fase3').src= 'img/ID_consultoriaProduto.jpg';
+		$('fase6').src= 'img/ID_investigacao.jpg';
+	}
+	else if (id == 'cli5')
+	{
+		$('fase3').src= 'img/ID_consultoriaProduto.jpg';
+	}
+}
+
+
+
+function changeInvestigaEN(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+	
+	if (id == 'cli1' || id == 'cli2')
+	{
+		$('fase2').src= 'img/ID_consultoriaEN_on.jpg';
+		$('fase3').src= 'img/ID_consultoriaProdutoEN_on.jpg';
+		$('fase4').src= 'img/ID_preclinicoEN_on.jpg';
+		$('fase5').src= 'img/ID_clinicoEN_on.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN_on.jpg';
+	}
+	else if (id == 'cli3')
+	{
+		$('fase2').src= 'img/ID_consultoriaEN_on.jpg';
+		$('fase4').src= 'img/ID_preclinicoEN_on.jpg';
+		$('fase5').src= 'img/ID_clinicoEN_on.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN_on.jpg';
+	}
+	else if (id == 'cli4')
+	{
+		$('fase3').src= 'img/ID_consultoriaProdutoEN_on.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN_on.jpg';
+	}
+	else if (id == 'cli5')
+	{
+		$('fase3').src= 'img/ID_consultoriaProdutoEN_on.jpg';
+	}
+}
+
+function restoreInvestigaEN(id,imageName)
+{
+	var formImg = document.getElementById(id)
+	formImg.src= imageName;
+	
+	if (id == 'cli1' || id == 'cli2')
+	{
+		$('fase2').src= 'img/ID_consultoriaEN.jpg';
+		$('fase3').src= 'img/ID_consultoriaProdutoEN.jpg';
+		$('fase4').src= 'img/ID_preclinicoEN.jpg';
+		$('fase5').src= 'img/ID_clinicoEN.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN.jpg';
+	}
+	else if (id == 'cli3')
+	{
+		$('fase2').src= 'img/ID_consultoriaEN.jpg';
+		$('fase4').src= 'img/ID_preclinicoEN.jpg';
+		$('fase5').src= 'img/ID_clinicoEN.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN.jpg';
+	}	
+	else if (id == 'cli4')
+	{
+		$('fase3').src= 'img/ID_consultoriaProdutoEN.jpg';
+		$('fase6').src= 'img/ID_investigacaoEN.jpg';
+	}
+	else if (id == 'cli5')
+	{
+		$('fase3').src= 'img/ID_consultoriaProdutoEN.jpg';
+	}
+}
+
+function acordeaoRecrutamento()
+{
+	var togglers = $$('.recrutamentoItemTopo');
+	var elements = $$('.recrutamentoItemDescricao');
+	var accordion = new Accordion (togglers, elements, {
+		display: -1,
+		alwaysHide: true,
+		onActive: function (togglers, elements){
+			
+		},
+		onBackground: function (togglers, elements){
+			
+		}
+	});
+}
+window.addEvent('domready',acordeaoRecrutamento);
+
+
+
+function activarAccordion(contentId)
+{
+	obj = document.getElementById(contentId);
+
+    if(obj.style.display == 'none')
+   {
+      obj.style.display = 'block';
+   }
+}
+
+
+function changeContent(elementToHide,elementToShow)
+{
+	elementToHide.setStyle("display","none");
+	elementToShow.setStyle("display","block");
+}
+
+
+function validateForm()
+{
+
+	var errMsg = '';
+	
+	if($('contNome').value == '')
+		errMsg = 'You must indicate a name\n';
+		
+	if(!CheckValidEmail($('contEmail')) || $('contEmail').value == '')
+		errMsg += 'You must indicate a valid email\n';
+	
+	if(errMsg != '')
+	{
+		alert(errMsg);
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+function CheckValidEmail(field)
+{
+	var str = field.value;
+
+	var emailReg = "^[\\w-_\.]*[\\w-_\.]\@[\\w]\.+[\\w]+[\\w]$";
+	var regex = new RegExp(emailReg);
+    ret = regex.test(str);
+
+	if(!ret)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+
+
+//]]>
+</script>
+
+</head><body>
+
+	<div class="siteContainer">
+		<div class="header">
+			<div class="topHeader">
+				<div class="headerTxt">
+					<img src="index.php_files/headerTxt.png" alt="Developing Clinical Research in Europe and Latin America" title="Developing Clinical Research in Europe and Latin America" border="0">
+				</div>
+			</div>
+			<div class="clearBoth"></div>
+			<div class="logoCont">
+			<div class="logo">
+				<a href="http://www.eurotrials.com/index.php?m=0&amp;idioma=1"><img style="border: medium none ;" src="index.php_files/logo.png" alt="Eurotrials &#8211; Scientific Consultants" title="Eurotrials &#8211; Scientific Consultants"></a>
+			</div>
+			</div>
+			<div class="menuGlobal" id="menuGlobal" style="display: block; opacity: 1;">
+		<div class="contentContainer">
+			<div class="center">
+				<div class="outrasContent">
+				<div class="outrasContentTopo">
+				<div class="outrasLeft">
+				<div class="outrasTitulo">
+				</div>
+				<div class="outrasSubtitulo">
+				</div>
+				<div class="outrasText">
+
+
+
+

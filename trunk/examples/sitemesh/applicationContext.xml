@@ -1,0 +1,113 @@
+
+	<!-- ========================= SITEMESH DEFINITIONS ========================= -->
+	
+	<!-- Setup by the SpringSitemeshFilter so native SiteMesh filters will use 
+	     the application context managed factory -->
+	<bean id="springSitemeshFilter" class="com.acegitech.core.sitemesh.SpringSitemeshFilter">
+		<property name="sitemeshFactory"><ref local="sitemeshFactory"/></property>
+	</bean>
+
+	<!-- This factory is used by Sitemesh's filter due to SpringSitemeshFilter -->
+	<bean id="sitemeshFactory" class="com.acegitech.core.sitemesh.SitemeshFactory">
+		<property name="pageParsers">
+			<map>
+				<entry key="text/html"><ref local="fastPageParser"/></entry>
+			</map>
+		</property>
+		<property name="defaultPageParser"><ref local="defaultPageParser"/></property>
+		<property name="decoratorMapper"><ref local="pageDecoratorMapper"/></property>
+	</bean>
+
+	<bean id="fastPageParser" class="com.opensymphony.module.sitemesh.parser.FastPageParser" />
+	<bean id="defaultPageParser" class="com.opensymphony.module.sitemesh.parser.DefaultPageParser" />
+
+	<bean id="nullDecorator" class="com.acegitech.core.sitemesh.DecoratorMapperFactory">
+		<property name="targetClass"><value>com.opensymphony.module.sitemesh.mapper.NullDecoratorMapper</value></property>
+	</bean>
+
+	<!-- COMPATIBILITY NOTES: 
+	       * ConfigDecoratorMapper rewritten as ContextDecoratorMapper (below)
+	       * FileDecoratorMapper incompatible as it uses the file system
+	       * AgentDecoratorMapper incompatible as it uses the file system
+	  -->
+	
+	<!-- W A R N I N G : 
+	
+	     Any decorator page (eg velocity.vm, main.jsp) MUST be accessed via the
+	     ContentController, as only ContentController understands how to respond
+	     to SiteMesh decorator requests. Accordingly, decorators should be made
+	     into Velocity Macros in all cases.
+	
+	  -->
+	<bean id="contextDecoratorMapper" class="com.acegitech.core.sitemesh.ContextDecoratorMapper">
+		<property name="parentMapper"><ref local="nullDecorator"/></property>
+		<property name="contextConfigLoader">
+			<value>
+				DEFAULT_PATH=/decorators
+				velocity,velocity.vm.jsp=/*
+				panel,panel.jsp=
+				printable,printable.jsp=
+				black,black.jsp=
+				nopanelsource,nopanelsource.jsp=
+				badpanelsource,badpanelsource.jsp=
+				velocity,velocity.vm=/*.fmx
+				test,test.jsp=/agent.jsp
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="parameterDecoratorMapper" class="com.acegitech.core.sitemesh.DecoratorMapperFactory">
+		<property name="targetClass"><value>com.opensymphony.module.sitemesh.mapper.ParameterDecoratorMapper</value></property>
+		<property name="parentMapper"><ref local="contextDecoratorMapper"/></property>
+		<property name="properties">
+			<props>
+				<prop key="decorator.parameter">decorator</prop>
+				<prop key="parameter.name">confirm</prop>
+				<prop key="parameter.value">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="robotDecoratorMapper" class="com.acegitech.core.sitemesh.DecoratorMapperFactory">
+		<property name="targetClass"><value>com.opensymphony.module.sitemesh.mapper.RobotDecoratorMapper</value></property>
+		<property name="parentMapper"><ref local="parameterDecoratorMapper"/></property>
+		<property name="properties">
+			<props>
+				<prop key="decorator">robot</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="printableDecoratorMapper" class="com.acegitech.core.sitemesh.DecoratorMapperFactory">
+		<property name="targetClass"><value>com.opensymphony.module.sitemesh.mapper.PrintableDecoratorMapper</value></property>
+		<property name="parentMapper"><ref local="robotDecoratorMapper"/></property>
+		<property name="properties">
+			<props>
+				<prop key="decorator">printable</prop>
+				<prop key="parameter.name">printable</prop>
+				<prop key="parameter.value">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="frameSetDecoratorMapper" class="com.acegitech.core.sitemesh.DecoratorMapperFactory">
+		<property name="targetClass"><value>com.opensymphony.module.sitemesh.mapper.FrameSetDecoratorMapper</value></property>
+		<property name="parentMapper"><ref local="printableDecoratorMapper"/></property>
+		<property name="properties">
+			<props>
+				<prop key="decorator">black</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="pageDecoratorMapper" class="com.acegitech.core.sitemesh.DecoratorMapperFactory">
+		<property name="targetClass"><value>com.opensymphony.module.sitemesh.mapper.PageDecoratorMapper</value></property>
+		<property name="parentMapper"><ref local="frameSetDecoratorMapper"/></property>
+		<property name="properties">
+			<props>
+				<prop key="property.1">meta.decorator</prop>
+				<prop key="property.2">decorator</prop>
+			</props>
+		</property>
+	</bean>
+

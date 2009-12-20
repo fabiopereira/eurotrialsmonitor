@@ -1,5 +1,6 @@
-
+#parse("header.vm")
 <form name="monitorLogin" action="/monitorLogin" method="POST">
 Monitor <input name="id" type="text"/>
 <input type="submit"/> 
 </form>
+#parse("footer.vm")
