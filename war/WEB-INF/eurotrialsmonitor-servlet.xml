@@ -22,7 +22,28 @@
 			</list>
 		</property>
 	</bean> 
+
+
+	<!-- Freemarker -->
+	<!-- 
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+	  <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+	  <property name="freemarkerVariables">
+	    <map>
+	      <entry key="xml_escape" value-ref="fmXmlEscape"/>
+	    </map>
+	  </property>
+	</bean>
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
 	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+	  <property name="cache" value="true"/>
+	  <property name="prefix" value=""/>
+	  <property name="suffix" value=".ftl"/>
+	</bean>
+	-->
+	
+	<!-- Velocity -->
 	<bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
 		<property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
 	</bean>

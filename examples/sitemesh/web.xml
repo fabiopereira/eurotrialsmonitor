@@ -1,0 +1,25 @@
+
+    <filter>
+        <filter-name>Acegi Spring Sitemesh Factory Filter</filter-name>
+        <filter-class>net.sf.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>com.acegitech.core.sitemesh.SpringSitemeshFilter</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>sitemesh</filter-name>
+        <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>Acegi Spring Sitemesh Factory Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>sitemesh</filter-name>
+        <url-pattern>*.fmx</url-pattern>
+    </filter-mapping>
+
