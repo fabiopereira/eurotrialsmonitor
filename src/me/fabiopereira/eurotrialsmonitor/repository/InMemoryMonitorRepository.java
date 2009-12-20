@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.fabiopereira.eurotrialsmonitor.model.Monitor;
+import me.fabiopereira.eurotrialsmonitor.model.Monitors;
 
 import org.springframework.stereotype.Repository;
 
@@ -26,4 +27,12 @@ public class InMemoryMonitorRepository implements MonitorRepository {
 		return map.get(id);
 	}
 
+	public Monitors findAll() {
+		return null;
+	}
+
+	@Override
+	public void add(Monitor monitor) {
+		map.put(monitor.getId(), monitor);
+	}
 }
