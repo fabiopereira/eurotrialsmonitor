@@ -8,7 +8,7 @@ import me.fabiopereira.eurotrialsmonitor.model.Monitors;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
+//@Repository
 public class InMemoryMonitorRepository implements MonitorRepository {
 	
 	Map<String, Monitor> map = new HashMap<String, Monitor>();

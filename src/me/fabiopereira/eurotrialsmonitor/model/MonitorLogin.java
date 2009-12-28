@@ -13,19 +13,14 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.appengine.api.datastore.Blob;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Monitor implements Serializable {	
+public class MonitorLogin implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
-	@PrimaryKey
-    @Persistent    
     String id;
 
-	public Monitor() {
+	public MonitorLogin() {
 	}    
 	
-	public Monitor(String id) {
+	public MonitorLogin(String id) {
 		this.id = id;
 	}
 
