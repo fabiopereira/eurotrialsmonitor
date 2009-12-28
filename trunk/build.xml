@@ -37,7 +37,7 @@
 
 
   <!-- Change if you like e.g. "war" better than "www" for the output -->
-  <property name="war.dir" location="www"/>
+  <property name="war.dir" location="war"/>
 
   <target name="war" depends="enhance" 
           description="Assemble the application directory">
@@ -48,11 +48,13 @@
         <exclude name="**/*~"/>
       </fileset>
     </copy>
+  	<!--
     <copy todir="${war.dir}/WEB-INF">
       <fileset dir="src/WEB-INF">
         <include name="*.xml"/>
-      </fileset>
+      </fileset>      
     </copy>
+    -->
     <enhance_war war="${war.dir}"/>
   </target>
 
@@ -75,11 +77,6 @@
         </fileset>
       </classpath>
     </javac>
-  </target>
-
-  <target name="clean"
-          description="Force a clean slate to rebuild">
-    <delete dir="${war.dir}"/>
   </target>
 
   <target name="runserver" depends="war"

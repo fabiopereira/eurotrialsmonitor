@@ -29,11 +29,11 @@ public class MonitorController {
     @RequestMapping(method = RequestMethod.POST)
 	public String monitorLogin(@RequestParam("id") String id, HttpServletRequest request) {
 		Monitor monitor = monitorRepository.findById(id);
-		if (monitor != null) {
-			request.getSession().setAttribute("monitor", monitor);
-			return "redirect:questionnaire";
+		if (monitor == null) {
+			return null;
 		}
-		return null;
+		request.getSession().setAttribute("monitor", monitor);
+		return "redirect:questionnaire";
 	}
 	
 }

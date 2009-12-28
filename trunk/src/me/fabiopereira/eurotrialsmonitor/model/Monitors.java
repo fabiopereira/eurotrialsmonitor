@@ -2,6 +2,7 @@ package me.fabiopereira.eurotrialsmonitor.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -14,7 +15,8 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.appengine.api.datastore.Blob;
 
-public class Monitors implements Serializable {
+public class Monitors implements Serializable {	
+	public static final Monitors EMPTY = new Monitors(Collections.EMPTY_LIST);
 	private final Collection<Monitor> values;
 
 	public Monitors(Collection<Monitor> values) {
