@@ -9,7 +9,6 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 
 import me.fabiopereira.eurotrialsmonitor.model.Monitor;
-import me.fabiopereira.eurotrialsmonitor.model.Monitors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.JdoCallback;
@@ -42,24 +41,6 @@ public class JdoMonitorRepository implements MonitorRepository {
 		} finally {
 			query.closeAll();
 		}
-	}
-
-	public Monitors findAll() {
-
-		Collection executeFind = jdoTemplate.executeFind(new JdoCallback() {
-			@Override
-			public Object doInJdo(PersistenceManager pm) throws JDOException {
-				Query query = pm.newQuery(Monitor.class);
-				Object result = query.execute();
-				return pmf.getPersistenceManager().detachCopyAll(result);
-			}
-		});
-
-		if (executeFind != null) {
-			return new Monitors(executeFind);
-		}
-
-		return Monitors.EMPTY;
 	}
 
 	@Override

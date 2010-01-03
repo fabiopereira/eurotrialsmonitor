@@ -3,14 +3,26 @@ package me.fabiopereira.eurotrialsmonitor.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.jdo.annotations.Inheritance;
+import javax.jdo.annotations.InheritanceStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+
+@PersistenceCapable
+@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 public class FormularioRespondido extends PersistedModel {
 
 	private static final long serialVersionUID = 20100103L;
 
+	@Persistent
 	private String estudo;
+	@Persistent
 	private String centro;
+	@Persistent
 	private Integer numeroVisita;
+	@Persistent
 	private Date dataVisita;
+	@Persistent(mappedBy = "formularioRespondido")
 	private List<EtapaRespondida> etapaRespondidas;
 
 	public String getEstudo() {

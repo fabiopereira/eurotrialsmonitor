@@ -12,6 +12,8 @@ import javax.jdo.annotations.PrimaryKey;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import com.google.appengine.api.datastore.Key;
+
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 public abstract class PersistedModel implements Serializable {
@@ -20,20 +22,20 @@ public abstract class PersistedModel implements Serializable {
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long id;
+	private Key key;
 
-	public Long getId() {
-		return id;
+	public Key getKey() {
+		return key;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setKey(Key key) {
+		this.key = key;
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder().
-			append(this.id).
+			append(this.key).
 		toHashCode();
 	}
 
@@ -47,7 +49,7 @@ public abstract class PersistedModel implements Serializable {
 			return false;
 		PersistedModel other = (PersistedModel) obj;
 		return new EqualsBuilder().
-			append(this.id, other.id).
+			append(this.key, other.key).
 			isEquals();
 	}
 }
