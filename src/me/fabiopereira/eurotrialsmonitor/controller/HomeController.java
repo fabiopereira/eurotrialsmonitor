@@ -17,7 +17,7 @@ public class HomeController {
 
     @RequestMapping(method = RequestMethod.GET)
 	public String home() {
-    	return "redirect:questionnaire";
+    	return "redirect:" + FormularioController.URL;
 	}
 
 }
