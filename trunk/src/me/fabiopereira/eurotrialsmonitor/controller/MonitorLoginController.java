@@ -6,6 +6,7 @@ import me.fabiopereira.eurotrialsmonitor.model.Monitor;
 import me.fabiopereira.eurotrialsmonitor.model.MonitorLogin;
 import me.fabiopereira.eurotrialsmonitor.repository.MonitorRepository;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,15 +27,19 @@ public class MonitorLoginController {
 	}
 	
     @RequestMapping(method = RequestMethod.GET)
-	public void monitorLoginGet() {
+	public void monitorLoginGet(@ModelAttribute MonitorLogin monitorLogin, BindingResult bindingResult) {
 	}
 
     @RequestMapping(method = RequestMethod.POST)
 	public String monitorLogin(@ModelAttribute MonitorLogin monitorLogin, 
 			BindingResult bindingResult, HttpServletRequest request) {
-		Monitor monitor = monitorRepository.findById(monitorLogin.getId());
+    	if (StringUtils.isBlank(monitorLogin.getId())) {
+			bindingResult.reject("invalid.login");
+			return null;
+    	}
+		Monitor monitor = monitorRepository.findByUsuario(monitorLogin.getId());
 		if (monitor == null) {
-			bindingResult.rejectValue("id", "invalid.login");
+			bindingResult.reject("invalid.login");
 			return null;
 		}
 		request.getSession().setAttribute("monitor", monitor);
