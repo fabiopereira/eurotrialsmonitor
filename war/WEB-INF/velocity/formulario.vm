@@ -1,3 +1,9 @@
 #parse("header.vm")
 Bem vindo $monitor.usuario
+
+[size=$etapas.size()]
+#foreach($etapa in $etapas)
+$etapa.descricao <br>
+#end
+
 #parse("footer.vm")
