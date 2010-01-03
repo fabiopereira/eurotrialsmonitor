@@ -1,6 +1,12 @@
 #parse("header.vm")
 <form name="monitorLogin" action="/monitorLogin" method="POST">
-Monitor <input name="id" type="text"/>
+#springBind("monitorLogin")
+#foreach($error in $status.errorMessages) <b> $error </b> <br> #end
+
+Monitor
+
+#springFormInput("monitorLogin.id" "")<br>
+
 <input type="submit"/> 
 </form>
 #parse("footer.vm")

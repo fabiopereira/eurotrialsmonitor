@@ -1,9 +1,9 @@
 package me.fabiopereira.eurotrialsmonitor.repository;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.jdo.JDOException;
-import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
@@ -13,7 +13,6 @@ import me.fabiopereira.eurotrialsmonitor.model.Monitors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.JdoCallback;
-import org.springframework.orm.jdo.JdoObjectRetrievalFailureException;
 import org.springframework.orm.jdo.JdoTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -29,35 +28,38 @@ public class JdoMonitorRepository implements MonitorRepository {
 	}
 
 	@Override
-	public Monitor findById(String id) {
+	public Monitor findByUsuario(String user) {
+		Query query = pmf.getPersistenceManager().newQuery(Monitor.class);
+		query.setFilter("usuario == usuarioParam");
+		query.declareParameters("String usuarioParam");
+
 		try {
-			return (Monitor) jdoTemplate.getObjectById(Monitor.class, id);
-		} catch (JdoObjectRetrievalFailureException e) {
-			if (e.getCause() != null && e.getCause().getClass().equals(JDOObjectNotFoundException.class)) {
+			List<Monitor> monitors = (List<Monitor>) query.execute(user);
+			if (monitors == null || monitors.isEmpty()){
 				return null;
 			}
-			throw e;
+			return monitors.get(0);
+		} finally {
+			query.closeAll();
 		}
-//		return findAll().findById(id);
 	}
-	
+
 	public Monitors findAll() {
-//		Collection<Monitor> result = (Collection<Monitor>) jdoTemplate.find(Monitor.class);
-		
-		Collection executeFind = jdoTemplate.executeFind(new JdoCallback() {			
+
+		Collection executeFind = jdoTemplate.executeFind(new JdoCallback() {
 			@Override
 			public Object doInJdo(PersistenceManager pm) throws JDOException {
 				Query query = pm.newQuery(Monitor.class);
 				Object result = query.execute();
-				return pmf.getPersistenceManager().detachCopyAll(result);				
+				return pmf.getPersistenceManager().detachCopyAll(result);
 			}
 		});
-		
-		if (executeFind != null){
+
+		if (executeFind != null) {
 			return new Monitors(executeFind);
 		}
-		
-		return Monitors.EMPTY;	
+
+		return Monitors.EMPTY;
 	}
 
 	@Override

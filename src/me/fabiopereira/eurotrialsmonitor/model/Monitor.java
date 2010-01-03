@@ -1,39 +1,31 @@
 package me.fabiopereira.eurotrialsmonitor.model;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Inheritance;
+import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
-import org.apache.commons.lang.StringUtils;
+@PersistenceCapable
+@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
+public class Monitor extends PersistedModel {	
 
-import com.google.appengine.api.datastore.Blob;
+	private static final long serialVersionUID = 20100103L;
 
-@PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Monitor implements Serializable {	
-
-	private static final long serialVersionUID = 1L;
-
-	@PrimaryKey
     @Persistent    
-    String id;
+    String usuario;
+    
+	public String getUsuario() {
+		return usuario;
+	}
 
-	public Monitor() {
-	}    
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+
+
+    
 	
-	public Monitor(String id) {
-		this.id = id;
-	}
+	
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 }

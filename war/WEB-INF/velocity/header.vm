@@ -667,6 +667,13 @@ function CheckValidEmail(field)
 				<div class="headerTxt">
 					<img src="index.php_files/headerTxt.png" alt="Developing Clinical Research in Europe and Latin America" title="Developing Clinical Research in Europe and Latin America" border="0">
 				</div>
+				#if ($monitor)
+				<div class="idioma">
+					<div>						
+						<a href="/monitorLogout" style="color:white"> Logout </a>						
+					</div>					
+				</div>
+				#end
 			</div>
 			<div class="clearBoth"></div>
 			<div class="logoCont">

@@ -1,19 +1,23 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	   xmlns:context="http://www.springframework.org/schema/context"
-	   xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-	                       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:vld="http://www.springmodules.org/validation/bean/validator"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+                           http://www.springmodules.org/validation/bean/validator http://www.springmodules.org/validation/bean/validator.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<context:annotation-config/>
 	<context:component-scan base-package="me.fabiopereira.eurotrialsmonitor" />
 
 
-	<bean class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean">
-		<!-- The name of the PMF is in META-INF/jdoconfig.xml -->
-		<property name="persistenceManagerFactoryName" value="transactions-optional"/>
-	</bean>
+	<bean class="org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean"
+		p:persistenceManagerFactoryName="transactions-optional" />
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
@@ -23,6 +27,8 @@
 		</property>
 	</bean> 
 
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+          p:basename="WEB-INF/ApplicationResources" p:cacheSeconds="1"/>
 
 	<!-- Freemarker -->
 	<!-- 
@@ -44,14 +50,15 @@
 	-->
 	
 	<!-- Velocity -->
-	<bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-		<property name="resourceLoaderPath" value="/WEB-INF/velocity/" />
-	</bean>
+	<bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer"
+		p:resourceLoaderPath="/WEB-INF/velocity/"
+	/>
 
-	<bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-		<property name="suffix" value=".vm" />
-		<property name="exposeRequestAttributes" value="true"/>
-		<property name="exposeSessionAttributes" value="true"/>
-	</bean>
+	<bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"
+		p:suffix=".vm"
+		p:exposeRequestAttributes="true"
+		p:exposeSessionAttributes="true"
+		p:exposeSpringMacroHelpers="true"
+	/>
 	
 </beans>

@@ -28,7 +28,7 @@ public class MonitorController {
 
     @RequestMapping(method = RequestMethod.POST)
 	public String monitorLogin(@RequestParam("id") String id, HttpServletRequest request) {
-		Monitor monitor = monitorRepository.findById(id);
+		Monitor monitor = monitorRepository.findByUsuario(id);
 		if (monitor == null) {
 			return null;
 		}
