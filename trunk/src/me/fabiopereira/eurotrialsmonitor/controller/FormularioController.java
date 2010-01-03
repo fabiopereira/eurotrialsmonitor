@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/questionnaire")
-public class QuestionnaireController {
+@RequestMapping("/" + FormularioController.URL)
+public class FormularioController {
+	public static final String URL = "formulario";
 
     @RequestMapping(method = RequestMethod.GET)
-	public void monitorLoginGet() {
+	public void get() {
 	}
 
     @RequestMapping(method = RequestMethod.POST)
-	public void monitorLogin() {
-	}
-	
+	public void post() {
+	}	
 }
