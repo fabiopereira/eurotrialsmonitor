@@ -4,6 +4,12 @@ Bem vindo $monitor.usuario
 [size=$etapas.size()]
 #foreach($etapa in $etapas)
 $etapa.descricao <br>
+
+#foreach($pergunta in $etapa.perguntas)
+$pergunta.descricao <br>
+#end
+
+
 #end
 
 #parse("footer.vm")

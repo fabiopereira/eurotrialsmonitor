@@ -25,7 +25,7 @@ public class EurotrialsBootstrap {
 
 	private void bootstrapAll() {
 		createUser();		
-//		createEtapasAndPerguntas();
+		createEtapasAndPerguntas();
 	}
 
 	private void createEtapasAndPerguntas() {

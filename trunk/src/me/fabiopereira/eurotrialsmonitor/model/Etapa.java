@@ -1,14 +1,17 @@
 package me.fabiopereira.eurotrialsmonitor.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.jdo.annotations.Element;
+import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-@PersistenceCapable
+@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 public class Etapa extends PersistedModel {
 
@@ -18,8 +21,9 @@ public class Etapa extends PersistedModel {
 	private Integer numero;
 	@Persistent
 	private String descricao;
-	@Persistent(mappedBy = "etapa")
-	private List<Pergunta> perguntas;
+	@Persistent(mappedBy = "etapa", defaultFetchGroup = "true")
+	@Element(dependent = "true")
+	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 
 	public Etapa() {
 	}
