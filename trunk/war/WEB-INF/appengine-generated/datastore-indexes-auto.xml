@@ -1,8 +1,8 @@
-<!-- Indices written at Tue, 5 Jan 2010 12:30:37 UTC -->
+<!-- Indices written at Wed, 6 Jan 2010 12:02:18 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 12 times in query history -->
+    <!-- Used 15 times in query history -->
     <datastore-index kind="Pergunta" ancestor="true" source="auto">
         <property name="perguntas_INTEGER_IDX" direction="asc"/>
     </datastore-index>
