@@ -22,12 +22,19 @@ public class EtapaRespondida extends PersistedModel {
 	@Persistent
 	private FormularioRespondido formularioRespondido;
 
+	public EtapaRespondida() {
+	}
+
+	public EtapaRespondida(FormularioRespondido formularioRespondido, Etapa etapa) {
+		this.formularioRespondido = formularioRespondido;
+		this.etapa = etapa;
+	}
+
 	public FormularioRespondido getFormularioRespondido() {
 		return formularioRespondido;
 	}
 
-	public void setFormularioRespondido(
-			FormularioRespondido formularioRespondido) {
+	public void setFormularioRespondido(FormularioRespondido formularioRespondido) {
 		this.formularioRespondido = formularioRespondido;
 	}
 
@@ -35,8 +42,7 @@ public class EtapaRespondida extends PersistedModel {
 		return perguntasRespondidas;
 	}
 
-	public void setPerguntasRespondidas(
-			List<PerguntaRespondida> perguntasRespondidas) {
+	public void setPerguntasRespondidas(List<PerguntaRespondida> perguntasRespondidas) {
 		this.perguntasRespondidas = perguntasRespondidas;
 	}
 

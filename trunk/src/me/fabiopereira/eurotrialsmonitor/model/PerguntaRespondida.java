@@ -20,6 +20,15 @@ public class PerguntaRespondida extends PersistedModel {
 	@Persistent
 	private EtapaRespondida etapaRespondida;
 
+	public PerguntaRespondida() {
+	}
+
+	public PerguntaRespondida(EtapaRespondida etapaRespondida, Pergunta pergunta) {
+		super();
+		this.pergunta = pergunta;
+		this.etapaRespondida = etapaRespondida;
+	}
+
 	public EtapaRespondida getEtapaRespondida() {
 		return etapaRespondida;
 	}
