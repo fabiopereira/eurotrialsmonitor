@@ -24,6 +24,15 @@ public class FormularioRespondido extends PersistedModel {
 	private Date dataVisita;
 	@Persistent(mappedBy = "formularioRespondido")
 	private List<EtapaRespondida> etapaRespondidas;
+	@Persistent
+	private Monitor monitor;
+
+	public FormularioRespondido() {
+	}
+
+	public FormularioRespondido(Monitor monitor) {
+		this.setMonitor(monitor);
+	}
 
 	public String getEstudo() {
 		return estudo;
@@ -65,4 +74,11 @@ public class FormularioRespondido extends PersistedModel {
 		this.etapaRespondidas = etapaRespondidas;
 	}
 
+	public void setMonitor(Monitor monitor) {
+		this.monitor = monitor;
+	}
+
+	public Monitor getMonitor() {
+		return monitor;
+	}
 }

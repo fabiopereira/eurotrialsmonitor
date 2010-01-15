@@ -6,6 +6,7 @@ import java.util.List;
 import me.fabiopereira.eurotrialsmonitor.model.Etapa;
 import me.fabiopereira.eurotrialsmonitor.model.EtapaRespondida;
 import me.fabiopereira.eurotrialsmonitor.model.FormularioRespondido;
+import me.fabiopereira.eurotrialsmonitor.model.Monitor;
 import me.fabiopereira.eurotrialsmonitor.model.Pergunta;
 import me.fabiopereira.eurotrialsmonitor.model.PerguntaRespondida;
 import me.fabiopereira.eurotrialsmonitor.repository.EtapaRepository;
@@ -24,11 +25,11 @@ public class FormularioBuilder {
 		this.etapaRepository = etapaRepository;
 	}
 
-	public FormularioRespondido build() {
+	public FormularioRespondido build(Monitor monitor) {
 
 		List<Etapa> etapas = etapaRepository.findAll();
 
-		FormularioRespondido formularioRespondido = new FormularioRespondido();
+		FormularioRespondido formularioRespondido = new FormularioRespondido(monitor);
 		formularioRespondido.setEtapaRespondidas(new ArrayList<EtapaRespondida>());
 
 		for (Etapa etapa : etapas) {
