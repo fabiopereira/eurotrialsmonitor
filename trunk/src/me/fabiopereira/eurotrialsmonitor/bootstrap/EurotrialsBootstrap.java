@@ -19,11 +19,12 @@ public class EurotrialsBootstrap {
 	public EurotrialsBootstrap(MonitorRepository monitorRepository, EtapaRepository etapaRepository) {
 		this.monitorRepository = monitorRepository;
 		this.etapaRepository = etapaRepository;
+		// bootstrapAll();
 	}
 
 	public void bootstrapAll() {
-		createUser();
-		createEtapasAndPerguntas();
+		// createUser();
+		// createEtapasAndPerguntas();
 	}
 
 	private void createEtapasAndPerguntas() {
