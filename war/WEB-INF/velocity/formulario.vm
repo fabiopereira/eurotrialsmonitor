@@ -1,15 +1,30 @@
 #parse("header.vm")
+<div>
 Bem vindo $monitor.usuario
+</div>
 
-[size=$etapas.size()]
-#foreach($etapa in $etapas)
-$etapa.descricao <br>
+#foreach($etapaRespondida in $formulario.etapaRespondidas)
+#set($etapaRespondidaCount = $velocityCount - 1)
+  <fieldset>
+    <legend>$etapaRespondida.etapa.descricao</legend>
+#foreach($perguntaRespondida in $etapaRespondida.perguntasRespondidas)
+#set($perguntaRespondidaCount = $velocityCount - 1)
 
-#foreach($pergunta in $etapa.perguntas)
-$pergunta.descricao <br>
+$perguntaRespondida.pergunta.descricao <br>
+
+<div>
+<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="SIM">Sim 
+<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="NAO">Nao
+<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="NA">NA
+</div>
+<div>
+<input type="text" name="id" id="id" value="$!monitorLogin.id">
+</div>
+<br>
 #end
 
 
+</fieldset>
 #end
 
 #parse("footer.vm")

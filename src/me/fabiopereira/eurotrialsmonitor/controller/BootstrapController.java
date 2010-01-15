@@ -1,5 +1,7 @@
 package me.fabiopereira.eurotrialsmonitor.controller;
 
+import me.fabiopereira.eurotrialsmonitor.bootstrap.EurotrialsBootstrap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -7,23 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/" + FormularioController.URL)
-public class FormularioController {
-	public static final String URL = "formulario";
+@RequestMapping("/" + BootstrapController.URL)
+public class BootstrapController {
+	public static final String URL = "bootstrap";
 
-	private final FormularioBuilder formularioBuilder;
+	private final EurotrialsBootstrap eurotrialsBootstrap;
 
 	@Autowired
-	public FormularioController(FormularioBuilder formularioBuilder) {
-		this.formularioBuilder = formularioBuilder;
+	public BootstrapController(EurotrialsBootstrap eurotrialsBootstrap) {
+		this.eurotrialsBootstrap = eurotrialsBootstrap;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public void get(ModelMap modelMap) {
-		modelMap.addAttribute("formulario", formularioBuilder.build());
+		eurotrialsBootstrap.bootstrapAll();
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public void post() {
-	}
 }
