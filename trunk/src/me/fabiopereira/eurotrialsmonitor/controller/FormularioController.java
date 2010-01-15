@@ -1,5 +1,9 @@
 package me.fabiopereira.eurotrialsmonitor.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import me.fabiopereira.eurotrialsmonitor.model.Monitor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,8 +23,9 @@ public class FormularioController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public void get(ModelMap modelMap) {
-		modelMap.addAttribute("formulario", formularioBuilder.build());
+	public void get(ModelMap modelMap, HttpServletRequest request) {
+		Monitor monitor = (Monitor) request.getAttribute("monitor");
+		modelMap.addAttribute("formulario", formularioBuilder.build(monitor));
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
