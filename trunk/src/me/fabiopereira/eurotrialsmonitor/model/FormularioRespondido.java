@@ -1,5 +1,7 @@
 package me.fabiopereira.eurotrialsmonitor.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -8,11 +10,14 @@ import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import org.apache.commons.lang.StringUtils;
+
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 public class FormularioRespondido extends PersistedModel {
 
 	private static final long serialVersionUID = 20100103L;
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Persistent
 	private String estudo;
@@ -64,8 +69,18 @@ public class FormularioRespondido extends PersistedModel {
 		return dataVisita;
 	}
 
+	public String getDataVisitaAsString() {
+		return dataVisita != null ? sdf.format(dataVisita) : null;
+
+	}
+
 	public void setDataVisita(Date dataVisita) {
 		this.dataVisita = dataVisita;
+	}
+
+	public void setDataVisitaAsString(String dataVisita) throws ParseException {
+		if (StringUtils.isNotBlank(dataVisita))
+			this.dataVisita = sdf.parse(dataVisita);
 	}
 
 	public List<EtapaRespondida> getEtapaRespondidas() {

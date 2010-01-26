@@ -6,6 +6,8 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import com.google.appengine.api.datastore.Key;
+
 public abstract class AbstractRepository<T> {
 
 	public T add(final T entity) {
@@ -19,6 +21,10 @@ public abstract class AbstractRepository<T> {
 			}
 		}
 		return entity;
+	}
+	
+	public T findByPrimaryKey(Key key) {
+		return (T) pm().getObjectById(getEntityClass(), key);
 	}
 
 	protected PersistenceManager pm() {
