@@ -24,7 +24,9 @@ public abstract class AbstractRepository<T> {
 	}
 	
 	public T findByPrimaryKey(Key key) {
-		return (T) pm().getObjectById(getEntityClass(), key);
+		T entity = (T) pm().getObjectById(getEntityClass(), key);
+		loadLazy(entity);
+		return entity;
 	}
 
 	protected PersistenceManager pm() {
@@ -47,11 +49,17 @@ public abstract class AbstractRepository<T> {
 		Query query = pm().newQuery(getEntityClass());
 		try {
 			List<T> entities = (List<T>) query.execute();
-			// pm.detachCopyAll(entities);
+			for (T entity : entities) {
+				loadLazy(entity);
+			}
+			pm().detachCopyAll(entities);
 			return entities;
 		} finally {
 			query.closeAll();
 		}
+	}
+
+	protected void loadLazy(T entity) {
 	}
 
 	private Class getEntityClass() {

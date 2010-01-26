@@ -27,7 +27,7 @@ public class FormularioRespondido extends PersistedModel {
 	private Integer numeroVisita;
 	@Persistent
 	private Date dataVisita;
-	@Persistent
+	@Persistent()
 	private List<EtapaRespondida> etapaRespondidas;
 	@Persistent
 	private Monitor monitor;
@@ -38,6 +38,9 @@ public class FormularioRespondido extends PersistedModel {
 	}
 
 	public FormularioRespondido(Monitor monitor) {
+		if (monitor == null) {
+			throw new IllegalArgumentException("Monitor nao pode ser nulo");
+		}
 		this.setMonitor(monitor);
 	}
 

@@ -14,7 +14,6 @@ import me.fabiopereira.eurotrialsmonitor.repository.FormularioRespondidoReposito
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,18 +35,14 @@ public class FormularioRespondidoController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public void get(ModelMap modelMap, HttpServletRequest request) {
-		Monitor monitor = (Monitor) request.getAttribute("monitor");
-		FormularioRespondido formularioRespondido = formularioBuilder.build(monitor);
-		request.setAttribute("formularioRespondido", formularioRespondido);
-		// modelMap.addAttribute("formularioRespondido", formularioRespondido);
+	public void get(HttpServletRequest request) {
+		getFormularioRespondido(request);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void save(HttpServletRequest request) {		
 		try {
 			FormularioRespondido formularioRespondido = getFormularioRespondido(request);
-			request.setAttribute("formularioRespondido", formularioRespondido);
 			populateFormularioHeaderFromRequest(formularioRespondido, request);
 			populateRespostasFromRequest(formularioRespondido, request);
 			formularioRespondidoRepository.add(formularioRespondido);
@@ -93,9 +88,10 @@ public class FormularioRespondidoController {
 			Key key = com.google.appengine.api.datastore.KeyFactory.stringToKey(keyValue);	
 			formularioRespondido = formularioRespondidoRepository.findByPrimaryKey(key);
 		} else {
-			Monitor monitor = (Monitor) request.getAttribute("monitor");
+			Monitor monitor = (Monitor) request.getSession().getAttribute("monitor");
 			formularioRespondido = formularioBuilder.build(monitor);
 		}
+		request.setAttribute("formularioRespondido", formularioRespondido);
 		return formularioRespondido;
 	}
 }

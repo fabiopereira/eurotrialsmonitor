@@ -1,0 +1,11 @@
+#parse("header.vm")
+<div>
+Bem vindo $monitor.usuario
+</div>
+
+#foreach($formularioRespondido in $formulariosRespondidos)
+<a href="formularioRespondido?keyValue=$formularioRespondido.keyValue">$formularioRespondido.estudo / $formularioRespondido.monitor / $formularioRespondido.dataVisitaAsString / $formularioRespondido.centro</a> <br>
+#end
+
+
+#parse("footer.vm")
