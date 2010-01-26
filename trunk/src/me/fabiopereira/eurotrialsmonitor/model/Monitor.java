@@ -11,6 +11,8 @@ public class Monitor extends PersistedModel {
 
 	private static final long serialVersionUID = 20100103L;
 
+	public static final String ADMIN_USUARIO = "admin";
+
     @Persistent    
     String usuario;
     
@@ -21,11 +23,8 @@ public class Monitor extends PersistedModel {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
-
-
-    
 	
-	
-
+	public boolean isAdmin() {
+		return ADMIN_USUARIO.equals(getUsuario());
+	}
 }

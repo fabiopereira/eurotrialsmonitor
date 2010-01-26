@@ -26,8 +26,7 @@ public class FormularioRespondidoSearchController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public void get(HttpServletRequest request) {
-		List<FormularioRespondido> formulariosRespondidos = formularioRespondidoRepository.findAll();
-		
+		List<FormularioRespondido> formulariosRespondidos = formularioRespondidoRepository.findAll();		
 		request.setAttribute("formulariosRespondidos", formulariosRespondidos);
 	}
 	

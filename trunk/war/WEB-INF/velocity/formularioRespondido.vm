@@ -10,7 +10,7 @@ $!errorMessage
 <input type="hidden" name="keyValue" id="keyValue" value="$!formularioRespondido.keyValue"> 
 
   <fieldset>
-    <legend>Formulário Header</legend>
+    <legend>Formulário #if($formularioRespondido.kpi) - KPI $formularioRespondido.kpiAsString #end</legend>
 	Estudo: <input type="text" name="estudo" id="estudo" value="$!formularioRespondido.estudo" size="60"><br/><br/>
 	Centro: <input type="text" name="centro" id="centro" value="$!formularioRespondido.centro" size="60"><br/><br/>
 	Numero da Visita: <input type="text" name="numeroVisita" id="numeroVisita" value="$!formularioRespondido.numeroVisita" maxlenght="3" size="3">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -21,7 +21,7 @@ $!errorMessage
 #foreach($etapaRespondida in $formularioRespondido.etapaRespondidas)
 #set($etapaRespondidaCount = $velocityCount)
   <fieldset>
-    <legend>$etapaRespondida.etapa.descricao</legend>
+    <legend>$etapaRespondida.etapa.descricao #if($etapaRespondida.kpi) - KPI $etapaRespondida.kpiAsString #end</legend>
 #foreach($perguntaRespondida in $etapaRespondida.perguntasRespondidas)
 #set($perguntaRespondidaCount = $velocityCount)
 #set($pergunta = $etapaRespondida.etapa.getPerguntaByNumero($perguntaRespondidaCount))

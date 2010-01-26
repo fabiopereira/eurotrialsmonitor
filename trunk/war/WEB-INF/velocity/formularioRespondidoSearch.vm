@@ -3,9 +3,39 @@
 Bem vindo $monitor.usuario
 </div>
 
-#foreach($formularioRespondido in $formulariosRespondidos)
-<a href="formularioRespondido?keyValue=$formularioRespondido.keyValue">$formularioRespondido.estudo / $formularioRespondido.monitor / $formularioRespondido.dataVisitaAsString / $formularioRespondido.centro</a> <br>
-#end
+
+
+<table border="1">
+	<tr>
+		<th width="20%">Monitor</th>
+		<th width="20%">Data da Visita</th>
+		<th width="25%">Centro</th>
+		<th width="25%">Estudo</th>
+		<th width="10%">KPI</th>
+	</tr>
+	#foreach($formularioRespondido in $formulariosRespondidos)
+	<tr>
+		<td>
+		<a href="formularioRespondido?keyValue=$formularioRespondido.keyValue">$formularioRespondido.monitor.usuario</a>
+		</td>
+		<td>
+		<a href="formularioRespondido?keyValue=$formularioRespondido.keyValue">$formularioRespondido.dataVisitaAsString</a>
+		</td>
+		<td>
+		<a href="formularioRespondido?keyValue=$formularioRespondido.keyValue">$formularioRespondido.centro</a>
+		</td>
+		<td>
+		<a href="formularioRespondido?keyValue=$formularioRespondido.keyValue">$formularioRespondido.estudo</a>
+		</td>
+		<td>
+		<a href="formularioRespondido?keyValue=$formularioRespondido.keyValue">$!formularioRespondido.kpiAsString </a>
+		</td>
+	</tr>
+	#end
+
+
+</table>
+
 
 
 #parse("footer.vm")
