@@ -3,37 +3,26 @@ package me.fabiopereira.eurotrialsmonitor.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.fabiopereira.eurotrialsmonitor.bootstrap.Etapas;
 import me.fabiopereira.eurotrialsmonitor.model.Etapa;
 import me.fabiopereira.eurotrialsmonitor.model.EtapaRespondida;
 import me.fabiopereira.eurotrialsmonitor.model.FormularioRespondido;
 import me.fabiopereira.eurotrialsmonitor.model.Monitor;
 import me.fabiopereira.eurotrialsmonitor.model.Pergunta;
 import me.fabiopereira.eurotrialsmonitor.model.PerguntaRespondida;
-import me.fabiopereira.eurotrialsmonitor.repository.EtapaRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FormularioBuilder {
 
-	private final EtapaRepository etapaRepository;
-
-	@Autowired
-	public FormularioBuilder(EtapaRepository etapaRepository) {
-		super();
-		this.etapaRepository = etapaRepository;
-	}
-
 	public FormularioRespondido build(Monitor monitor) {
-
-		List<Etapa> etapas = etapaRepository.findAll();
-
+		List<Etapa> etapas = Etapas.ALL;
 		FormularioRespondido formularioRespondido = new FormularioRespondido(monitor);
 		formularioRespondido.setEtapaRespondidas(new ArrayList<EtapaRespondida>());
 
 		for (Etapa etapa : etapas) {
-			EtapaRespondida etapaRespondida = new EtapaRespondida(formularioRespondido, etapa);
+			EtapaRespondida etapaRespondida = new EtapaRespondida(etapa);
 			etapaRespondida.setPerguntasRespondidas(new ArrayList<PerguntaRespondida>());
 
 			List<Pergunta> perguntas = etapa.getPerguntas();

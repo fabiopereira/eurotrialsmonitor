@@ -6,21 +6,22 @@ Bem vindo $monitor.usuario
 <form action="formularioRespondido" method="POST"> 
 
 #foreach($etapaRespondida in $formularioRespondido.etapaRespondidas)
-#set($etapaRespondidaCount = $velocityCount - 1)
+#set($etapaRespondidaCount = $velocityCount)
   <fieldset>
     <legend>$etapaRespondida.etapa.descricao</legend>
 #foreach($perguntaRespondida in $etapaRespondida.perguntasRespondidas)
-#set($perguntaRespondidaCount = $velocityCount - 1)
+#set($perguntaRespondidaCount = $velocityCount)
+#set($pergunta = $etapaRespondida.etapa.getPerguntaByNumero($perguntaRespondidaCount))
 
-$perguntaRespondida.pergunta.descricao <br>
+$pergunta.descricao <br>
 
 <div>
-<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="SIM">Sim 
-<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="NAO">Nao
-<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="NA">NA
+<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="SIM" #if($perguntaRespondida.resposta == "SIM") checked #end >Sim 
+<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="NAO" #if($perguntaRespondida.resposta == "NAO") checked #end >Nao
+<input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="NA"  #if($perguntaRespondida.resposta == "NA") checked #end >NA
 </div>
 <div>
-<input type="text" name="id" id="id" value="$!monitorLogin.id">
+<input type="text" name="id" id="id" value="">
 </div>
 <br>
 #end

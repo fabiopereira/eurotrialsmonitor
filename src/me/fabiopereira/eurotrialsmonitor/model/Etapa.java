@@ -4,25 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.jdo.annotations.Element;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Inheritance;
-import javax.jdo.annotations.InheritanceStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-
-@PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
-@Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
-public class Etapa extends PersistedModel {
+public class Etapa {
 
 	private static final long serialVersionUID = 20100103L;
 
-	@Persistent
 	private Integer numero;
-	@Persistent
 	private String descricao;
-	@Persistent(mappedBy = "etapa", defaultFetchGroup = "true")
-	@Element(dependent = "true")
 	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 
 	public Etapa() {
@@ -31,9 +18,6 @@ public class Etapa extends PersistedModel {
 	public Etapa(Integer numero, String descricao, Pergunta ... perguntas) {
 		this.numero = numero;
 		this.descricao = descricao;
-		for (Pergunta pergunta : perguntas) {
-			pergunta.setEtapa(this);
-		}
 		this.perguntas = Arrays.asList(perguntas);		
 	}
 
@@ -60,5 +44,13 @@ public class Etapa extends PersistedModel {
 	public void setPerguntas(List<Pergunta> perguntas) {
 		this.perguntas = perguntas;
 	}
-
+	
+	public Pergunta getPerguntaByNumero(Integer perguntaNumero) {
+		for (Pergunta pergunta : perguntas) {
+			if (pergunta.getNumero().equals(perguntaNumero)) {
+				return pergunta;
+			}
+		}
+		throw new IllegalArgumentException("Pergunta not found " + perguntaNumero);
+	}
 }
