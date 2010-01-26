@@ -13,6 +13,6 @@ public class MonitorRepository extends AbstractRepository<Monitor> {
 		Query query = pm().newQuery(Monitor.class);
 		query.setFilter("usuario == usuarioParam");
 		query.declareParameters("String usuarioParam");
-		return findByQuery(query, user);
+		return findByQuery(query, user);		
 	}
 }

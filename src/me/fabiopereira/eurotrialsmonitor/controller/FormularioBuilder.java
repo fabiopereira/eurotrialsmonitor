@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FormularioBuilder {
 
-	public FormularioRespondido build(Monitor monitor) {
+	public FormularioRespondido build(Monitor monitor) {		
 		List<Etapa> etapas = Etapas.ALL;
 		FormularioRespondido formularioRespondido = new FormularioRespondido(monitor);
 		formularioRespondido.setEtapaRespondidas(new ArrayList<EtapaRespondida>());
