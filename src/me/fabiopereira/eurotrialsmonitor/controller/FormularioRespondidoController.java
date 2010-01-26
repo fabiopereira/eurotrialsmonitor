@@ -47,6 +47,7 @@ public class FormularioRespondidoController {
 			populateRespostasFromRequest(formularioRespondido, request);
 			formularioRespondidoRepository.add(formularioRespondido);
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("errorMessage", "Dados inválidos - " + e.getMessage());
 		}
 	}

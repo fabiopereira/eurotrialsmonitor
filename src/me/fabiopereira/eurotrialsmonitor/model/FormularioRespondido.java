@@ -2,6 +2,7 @@ package me.fabiopereira.eurotrialsmonitor.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -108,5 +109,29 @@ public class FormularioRespondido extends PersistedModel {
 
 	public void setStatus(FormularioRespondidoStatus status) {
 		this.status = status;
+	}
+
+	public Double getKpi() {
+		return KPICalculator.getKpi(getPerguntasRespondidas());
+	}
+	
+	public String getKpiAsString(){
+		return KPICalculator.getKpiAsString(getPerguntasRespondidas());
+	}
+	
+	public PerguntasRespondidas getPerguntasRespondidas() {
+		List<PerguntaRespondida> perguntasRespondidas = new ArrayList<PerguntaRespondida>();
+		for (EtapaRespondida etapaRespondida : etapaRespondidas) {
+			perguntasRespondidas.addAll(etapaRespondida.getPerguntasRespondidas());
+		}
+		return new PerguntasRespondidas(perguntasRespondidas);
+	}
+
+	public boolean isFormularioCompleto() {
+		return getPerguntasRespondidas().isTodasRespondidas();
+	}
+
+	public void responderTodas(Resposta resposta) {
+		getPerguntasRespondidas().responderTodas(resposta);
 	}
 }

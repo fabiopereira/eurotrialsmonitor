@@ -18,12 +18,15 @@ public class EurotrialsBootstrap {
 	}
 
 	public void bootstrapAll() {
-		createUser();
+		createUser("anderson.porto");
+		createUser("camila.hayashi");
+		createUser("fabio.pereira");
+		createUser(Monitor.ADMIN_USUARIO);		
 	}
 	
-	private void createUser() {
+	private void createUser(String usuario) {
 		Monitor monitor = new Monitor();
-		monitor.setUsuario("anderson.porto");
+		monitor.setUsuario(usuario);
 		monitorRepository.add(monitor);
 	}
 }

@@ -670,7 +670,9 @@ function CheckValidEmail(field)
 				#if ($monitor)
 				<div class="idioma">
 					<div>						
-						<a href="/monitorLogout" style="color:white"> Logout </a>						
+						<a href="/formularioRespondido" style="color:white">Novo Formulário</a> <span style="color:white"> | </span>
+						<a href="/formularioRespondidoSearch" style="color:white">Busca</a> <span style="color:white"> | </span>
+						<a href="/monitorLogout" style="color:white">Logout</a>						
 					</div>					
 				</div>
 				#end

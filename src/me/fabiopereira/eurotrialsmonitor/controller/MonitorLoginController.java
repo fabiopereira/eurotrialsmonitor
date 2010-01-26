@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/monitorLogin")
@@ -43,7 +42,7 @@ public class MonitorLoginController {
 			return null;
 		}
 		request.getSession().setAttribute("monitor", monitor);
-		return "redirect:" + FormularioRespondidoController.URL;
+		return "redirect:" + FormularioRespondidoSearchController.URL;
 	}
 	
 }

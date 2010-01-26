@@ -56,4 +56,12 @@ public class EtapaRespondida extends PersistedModel {
 	public Etapa getEtapa() {
 		return Etapas.byNumero(etapaNumero);
 	}
+	
+	public Double getKpi() {
+		return KPICalculator.getKpi(new PerguntasRespondidas(getPerguntasRespondidas()));
+	}	
+	
+	public String getKpiAsString(){
+		return KPICalculator.getKpiAsString(new PerguntasRespondidas(getPerguntasRespondidas()));
+	}
 }
