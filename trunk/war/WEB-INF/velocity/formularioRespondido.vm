@@ -3,7 +3,9 @@
 Bem vindo $monitor.usuario
 </div>
 
-#foreach($etapaRespondida in $formulario.etapaRespondidas)
+<form action="formularioRespondido" method="POST"> 
+
+#foreach($etapaRespondida in $formularioRespondido.etapaRespondidas)
 #set($etapaRespondidaCount = $velocityCount - 1)
   <fieldset>
     <legend>$etapaRespondida.etapa.descricao</legend>
@@ -26,5 +28,7 @@ $perguntaRespondida.pergunta.descricao <br>
 
 </fieldset>
 #end
+
+</form>
 
 #parse("footer.vm")
