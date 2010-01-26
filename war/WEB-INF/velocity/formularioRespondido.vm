@@ -29,6 +29,8 @@ $perguntaRespondida.pergunta.descricao <br>
 </fieldset>
 #end
 
+<input type="submit"/>
+
 </form>
 
 #parse("footer.vm")
