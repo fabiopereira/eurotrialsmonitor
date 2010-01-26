@@ -16,25 +16,14 @@ public class PerguntaRespondida extends PersistedModel {
 	@Persistent
 	private String justifcativa;
 	@Persistent
-	private Pergunta pergunta;
-	@Persistent
-	private EtapaRespondida etapaRespondida;
+	private Integer perguntaNumero;
 
 	public PerguntaRespondida() {
 	}
 
 	public PerguntaRespondida(EtapaRespondida etapaRespondida, Pergunta pergunta) {
 		super();
-		this.pergunta = pergunta;
-		this.etapaRespondida = etapaRespondida;
-	}
-
-	public EtapaRespondida getEtapaRespondida() {
-		return etapaRespondida;
-	}
-
-	public void setEtapaRespondida(EtapaRespondida etapaRespondida) {
-		this.etapaRespondida = etapaRespondida;
+		this.perguntaNumero = pergunta.getNumero();
 	}
 
 	public Resposta getResposta() {
@@ -53,12 +42,12 @@ public class PerguntaRespondida extends PersistedModel {
 		this.justifcativa = justifcativa;
 	}
 
-	public Pergunta getPergunta() {
-		return pergunta;
+	public Integer getPerguntaNumero() {
+		return perguntaNumero;
 	}
 
-	public void setPergunta(Pergunta pergunta) {
-		this.pergunta = pergunta;
+	public void setPerguntaNumero(Integer perguntaNUmero) {
+		this.perguntaNumero = perguntaNUmero;
 	}
 
 }

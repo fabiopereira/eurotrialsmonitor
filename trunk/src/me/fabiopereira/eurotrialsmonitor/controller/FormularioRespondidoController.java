@@ -43,15 +43,17 @@ public class FormularioRespondidoController {
 		Monitor monitor = (Monitor) request.getAttribute("monitor");
 		FormularioRespondido formularioRespondido = formularioBuilder.build(monitor);
 
-		int etapaRespondidaIndex = 0;
+		int etapaRespondidaIndex = 1;
 		for (EtapaRespondida etapaRespondida : formularioRespondido.getEtapaRespondidas()) {
-			int perguntaRespondidaIndex = 0;
+			int perguntaRespondidaIndex = 1;
 			for (PerguntaRespondida perguntaRespondida : etapaRespondida.getPerguntasRespondidas()) {
 				String respostaAsString = request.getParameter(String.format("etapaRespondidas[%s].perguntasRespondidas[%s].resposta",
 						etapaRespondidaIndex, perguntaRespondidaIndex));
 				if (respostaAsString != null) {
 					Resposta resposta = Resposta.valueOf(respostaAsString);
 					perguntaRespondida.setResposta(resposta);
+				} else {
+					perguntaRespondida.setResposta(null);
 				}
 				perguntaRespondidaIndex++;
 			}
@@ -59,6 +61,7 @@ public class FormularioRespondidoController {
 		}
 
 		formularioRespondidoRepository.add(formularioRespondido);
+		request.setAttribute("formularioRespondido", formularioRespondido);
 	}
 	// @ModelAttribute
 	// FormularioRespondido getFormularioRespondido(@ModelAttribute Monitor

@@ -7,6 +7,8 @@ import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import me.fabiopereira.eurotrialsmonitor.bootstrap.Etapas;
+
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 public class EtapaRespondida extends PersistedModel {
@@ -14,28 +16,17 @@ public class EtapaRespondida extends PersistedModel {
 	private static final long serialVersionUID = 20100103L;
 
 	@Persistent
-	private Etapa etapa;
+	private Integer etapaNumero;
 	@Persistent
 	private String comentario;
-	@Persistent(mappedBy = "etapaRespondida")
-	private List<PerguntaRespondida> perguntasRespondidas;
 	@Persistent
-	private FormularioRespondido formularioRespondido;
+	private List<PerguntaRespondida> perguntasRespondidas;
 
 	public EtapaRespondida() {
 	}
 
-	public EtapaRespondida(FormularioRespondido formularioRespondido, Etapa etapa) {
-		this.formularioRespondido = formularioRespondido;
-		this.etapa = etapa;
-	}
-
-	public FormularioRespondido getFormularioRespondido() {
-		return formularioRespondido;
-	}
-
-	public void setFormularioRespondido(FormularioRespondido formularioRespondido) {
-		this.formularioRespondido = formularioRespondido;
+	public EtapaRespondida(Etapa etapa) {
+		this.etapaNumero = etapa.getNumero();
 	}
 
 	public List<PerguntaRespondida> getPerguntasRespondidas() {
@@ -46,12 +37,12 @@ public class EtapaRespondida extends PersistedModel {
 		this.perguntasRespondidas = perguntasRespondidas;
 	}
 
-	public Etapa getEtapa() {
-		return etapa;
+	public Integer getEtapaNumero() {
+		return etapaNumero;
 	}
 
-	public void setEtapa(Etapa etapa) {
-		this.etapa = etapa;
+	public void setEtapaNumero(Integer etapaNumero) {
+		this.etapaNumero = etapaNumero;
 	}
 
 	public String getComentario() {
@@ -62,4 +53,7 @@ public class EtapaRespondida extends PersistedModel {
 		this.comentario = comentario;
 	}
 
+	public Etapa getEtapa() {
+		return Etapas.byNumero(etapaNumero);
+	}
 }

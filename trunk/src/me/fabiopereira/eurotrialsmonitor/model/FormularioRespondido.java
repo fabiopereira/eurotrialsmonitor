@@ -22,7 +22,7 @@ public class FormularioRespondido extends PersistedModel {
 	private Integer numeroVisita;
 	@Persistent
 	private Date dataVisita;
-	@Persistent(mappedBy = "formularioRespondido")
+	@Persistent
 	private List<EtapaRespondida> etapaRespondidas;
 	@Persistent
 	private Monitor monitor;
