@@ -14,7 +14,7 @@ public class PerguntaRespondida extends PersistedModel {
 	@Persistent
 	private Resposta resposta;
 	@Persistent
-	private String justifcativa;
+	private String justificativa;
 	@Persistent
 	private Integer perguntaNumero;
 
@@ -34,12 +34,12 @@ public class PerguntaRespondida extends PersistedModel {
 		this.resposta = resposta;
 	}
 
-	public String getJustifcativa() {
-		return justifcativa;
+	public String getJustificativa() {
+		return justificativa;
 	}
 
-	public void setJustifcativa(String justifcativa) {
-		this.justifcativa = justifcativa;
+	public void setJustificativa(String justifcativa) {
+		this.justificativa = justifcativa;
 	}
 
 	public Integer getPerguntaNumero() {
