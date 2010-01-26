@@ -26,6 +26,8 @@ public class FormularioRespondido extends PersistedModel {
 	private List<EtapaRespondida> etapaRespondidas;
 	@Persistent
 	private Monitor monitor;
+	@Persistent
+	private FormularioRespondidoStatus status;
 
 	public FormularioRespondido() {
 	}
@@ -80,5 +82,13 @@ public class FormularioRespondido extends PersistedModel {
 
 	public Monitor getMonitor() {
 		return monitor;
+	}
+
+	public FormularioRespondidoStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(FormularioRespondidoStatus status) {
+		this.status = status;
 	}
 }

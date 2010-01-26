@@ -43,7 +43,7 @@ public class MonitorLoginController {
 			return null;
 		}
 		request.getSession().setAttribute("monitor", monitor);
-		return "redirect:" + FormularioController.URL;
+		return "redirect:" + FormularioRespondidoController.URL;
 	}
 	
 }

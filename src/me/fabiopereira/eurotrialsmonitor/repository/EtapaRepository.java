@@ -1,12 +1,18 @@
 package me.fabiopereira.eurotrialsmonitor.repository;
 
-import java.util.List;
+import javax.jdo.PersistenceManagerFactory;
 
 import me.fabiopereira.eurotrialsmonitor.model.Etapa;
 
-public interface EtapaRepository {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-	void add(Etapa etapa);
+@Repository
+public class EtapaRepository extends AbstractRepository<Etapa> {
 
-	List<Etapa> findAll();
+	@Autowired
+	public EtapaRepository(PersistenceManagerFactory pmf) {
+		super(pmf);
+	}
+
 }
