@@ -22,4 +22,5 @@ public class MonitorLoginInterceptor extends HandlerInterceptorAdapter {
 		}
 		return true;
 	}
+
 }

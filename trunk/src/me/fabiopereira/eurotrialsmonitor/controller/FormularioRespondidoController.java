@@ -7,6 +7,7 @@ import me.fabiopereira.eurotrialsmonitor.model.FormularioRespondido;
 import me.fabiopereira.eurotrialsmonitor.model.Monitor;
 import me.fabiopereira.eurotrialsmonitor.model.PerguntaRespondida;
 import me.fabiopereira.eurotrialsmonitor.model.Resposta;
+import me.fabiopereira.eurotrialsmonitor.repository.FormularioRespondidoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,12 @@ public class FormularioRespondidoController {
 	public static final String URL = "formularioRespondido";
 
 	private final FormularioBuilder formularioBuilder;
+	private final FormularioRespondidoRepository formularioRespondidoRepository;
 
 	@Autowired
-	public FormularioRespondidoController(FormularioBuilder formularioBuilder) {
+	public FormularioRespondidoController(FormularioBuilder formularioBuilder, FormularioRespondidoRepository formularioRespondidoRepository) {
 		this.formularioBuilder = formularioBuilder;
+		this.formularioRespondidoRepository = formularioRespondidoRepository;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -37,7 +40,8 @@ public class FormularioRespondidoController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void save(HttpServletRequest request) {
-		FormularioRespondido formularioRespondido = (FormularioRespondido) request.getAttribute("formularioRespondido");
+		Monitor monitor = (Monitor) request.getAttribute("monitor");
+		FormularioRespondido formularioRespondido = formularioBuilder.build(monitor);
 
 		int etapaRespondidaIndex = 0;
 		for (EtapaRespondida etapaRespondida : formularioRespondido.getEtapaRespondidas()) {
@@ -54,7 +58,7 @@ public class FormularioRespondidoController {
 			etapaRespondidaIndex++;
 		}
 
-		// formularioRespondidoService.save(formularioRespondido);
+		formularioRespondidoRepository.add(formularioRespondido);
 	}
 	// @ModelAttribute
 	// FormularioRespondido getFormularioRespondido(@ModelAttribute Monitor

@@ -4,34 +4,25 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
-
-import org.springframework.orm.jdo.JdoTemplate;
 
 public abstract class AbstractRepository<T> {
 
-	JdoTemplate jdoTemplate;
-	PersistenceManagerFactory pmf;
-
-	protected AbstractRepository(PersistenceManagerFactory pmf) {
-		super();
-		this.jdoTemplate = new JdoTemplate(pmf);
-		this.pmf = pmf;
-	}
-
-	public void add(T entity) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		pm.currentTransaction().begin();
+	public T add(final T entity) {
+		pm().currentTransaction().begin();
 		try {
-			pm.makePersistent(entity);
-			pm.currentTransaction().commit();
+			pm().makePersistent(entity);
+			pm().currentTransaction().commit();
 		} finally {
-			if (pm.currentTransaction().isActive()) {
-				pm.currentTransaction().rollback();
+			if (pm().currentTransaction().isActive()) {
+				pm().currentTransaction().rollback();
 			}
 		}
-		// jdoTemplate.makePersistent(entity);
+		return entity;
+	}
+
+	protected PersistenceManager pm() {
+		return CurrentPersistenceManager.get();
 	}
 
 	protected T findByQuery(Query query, String param) {
@@ -47,10 +38,10 @@ public abstract class AbstractRepository<T> {
 	}
 
 	public List<T> findAll() {
-		Query query = pmf.getPersistenceManager().newQuery(getEntityClass());
-
+		Query query = pm().newQuery(getEntityClass());
 		try {
 			List<T> entities = (List<T>) query.execute();
+			// pm.detachCopyAll(entities);
 			return entities;
 		} finally {
 			query.closeAll();
@@ -60,4 +51,5 @@ public abstract class AbstractRepository<T> {
 	private Class getEntityClass() {
 		return ((Class) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
 	}
+
 }
