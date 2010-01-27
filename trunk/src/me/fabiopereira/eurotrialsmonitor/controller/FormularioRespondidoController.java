@@ -1,9 +1,8 @@
 package me.fabiopereira.eurotrialsmonitor.controller;
 
-import java.text.ParseException;
-
 import javax.servlet.http.HttpServletRequest;
 
+import me.fabiopereira.eurotrialsmonitor.exception.CampoObrigatorioException;
 import me.fabiopereira.eurotrialsmonitor.model.EtapaRespondida;
 import me.fabiopereira.eurotrialsmonitor.model.FormularioRespondido;
 import me.fabiopereira.eurotrialsmonitor.model.Monitor;
@@ -40,23 +39,27 @@ public class FormularioRespondidoController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void save(HttpServletRequest request) {		
-		try {
-			FormularioRespondido formularioRespondido = getFormularioRespondido(request);
-			populateFormularioHeaderFromRequest(formularioRespondido, request);
-			populateRespostasFromRequest(formularioRespondido, request);
-			formularioRespondidoRepository.add(formularioRespondido);
-		} catch (Exception e) {
-			e.printStackTrace();
-			request.setAttribute("errorMessage", "Dados inválidos - " + e.getMessage());
-		}
+	public void save(HttpServletRequest request) {
+		FormularioRespondido formularioRespondido = getFormularioRespondido(request);
+		populateFormularioHeaderFromRequest(formularioRespondido, request);
+		populateRespostasFromRequest(formularioRespondido, request);
+		formularioRespondidoRepository.persist(formularioRespondido);
+		request.setAttribute("formularioRespondido", formularioRespondido);
 	}
 
-	private void populateFormularioHeaderFromRequest(FormularioRespondido formularioRespondido, HttpServletRequest request) throws ParseException {
-		formularioRespondido.setEstudo(request.getParameter("estudo"));
-		formularioRespondido.setCentro(request.getParameter("centro"));
-		formularioRespondido.setNumeroVisita(Integer.valueOf(request.getParameter("numeroVisita")));
-		formularioRespondido.setDataVisitaAsString(request.getParameter("dataVisita"));
+	private void populateFormularioHeaderFromRequest(FormularioRespondido formularioRespondido, HttpServletRequest request) {
+		formularioRespondido.setEstudo(getCampoObrigatorio(request, "estudo"));
+		formularioRespondido.setCentro(getCampoObrigatorio(request, "centro"));
+		formularioRespondido.setNumeroVisita(getCampoObrigatorio(request, "numeroVisita"));
+		formularioRespondido.setDataVisitaAsString(getCampoObrigatorio(request, "dataVisita"));
+	}
+
+	private String getCampoObrigatorio(HttpServletRequest request, String parameter) {
+		String parameterValue = request.getParameter(parameter);
+		if (StringUtils.isBlank(parameterValue)) {
+			throw new CampoObrigatorioException();
+		}
+		return parameterValue;
 	}
 
 	private void populateRespostasFromRequest(FormularioRespondido formularioRespondido, HttpServletRequest request) {

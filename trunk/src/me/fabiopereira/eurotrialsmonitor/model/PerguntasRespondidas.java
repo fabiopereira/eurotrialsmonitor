@@ -2,6 +2,8 @@ package me.fabiopereira.eurotrialsmonitor.model;
 
 import java.util.List;
 
+import me.fabiopereira.eurotrialsmonitor.exception.TodasPerguntasComRespostaNaoTemQuePossuirJustificativaException;
+
 
 public class PerguntasRespondidas {
 	private final List<PerguntaRespondida> list;
@@ -34,4 +36,16 @@ public class PerguntasRespondidas {
 			perguntaRespondida.setResposta(resposta);
 		}
 	}
+	
+	public void validateOnPersist() {
+		validateTodasPerguntasComRespostaNaoTemQuePossuirJustificativa();
+	}
+	
+	private void validateTodasPerguntasComRespostaNaoTemQuePossuirJustificativa() {
+		for (PerguntaRespondida perguntaRespondida : list) {
+			if (perguntaRespondida.isNao() && !perguntaRespondida.isJustificativaPreenchida()) {
+				throw new TodasPerguntasComRespostaNaoTemQuePossuirJustificativaException();
+			}
+		}
+	}	
 }

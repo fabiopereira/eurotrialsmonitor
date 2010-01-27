@@ -1,19 +1,21 @@
 #parse("header.vm")
-<div>
-Bem vindo $monitor.usuario
-</div>
-
-
 
 <table border="1">
+
+#if($formulariosRespondidos.list.empty)
+
+Bem vindo $monitor.usuario, você não possui nenhum formulário respondido.
+
+#else
+
 	<tr>
 		<th width="20%">Monitor</th>
 		<th width="20%">Data da Visita</th>
-		<th width="25%">Centro</th>
+		<th width="">Centro</th>
 		<th width="25%">Estudo</th>
-		<th width="10%">KPI</th>
-	</tr>
-	#foreach($formularioRespondido in $formulariosRespondidos)
+		<th width="">KPI</th>
+	</tr>	
+	#foreach($formularioRespondido in $formulariosRespondidos.list)
 	<tr>
 		<td>
 		<a href="formularioRespondido?keyValue=$formularioRespondido.keyValue">$formularioRespondido.monitor.usuario</a>
@@ -33,9 +35,9 @@ Bem vindo $monitor.usuario
 	</tr>
 	#end
 
+#end
 
 </table>
-
 
 
 #parse("footer.vm")

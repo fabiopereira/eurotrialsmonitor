@@ -5,6 +5,8 @@ import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import org.apache.commons.lang.StringUtils;
+
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 public class PerguntaRespondida extends PersistedModel {
@@ -48,6 +50,14 @@ public class PerguntaRespondida extends PersistedModel {
 
 	public void setPerguntaNumero(Integer perguntaNUmero) {
 		this.perguntaNumero = perguntaNUmero;
+	}
+
+	public boolean isNao() {
+		return Resposta.NAO.equals(getResposta());
+	}
+
+	public boolean isJustificativaPreenchida() {
+		return !StringUtils.isBlank(getJustificativa());
 	}
 
 }

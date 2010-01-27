@@ -16,8 +16,11 @@ public class KPICalculator {
 
 	public static String getKpiAsString(PerguntasRespondidas perguntasRespondidas) {
 		Double kpi = getKpi(perguntasRespondidas);
-		DecimalFormat twoDForm = new DecimalFormat("#.##");
-		return twoDForm.format(kpi) + "%";
+		if (kpi != null) {
+			DecimalFormat twoDForm = new DecimalFormat("#.##");
+			return twoDForm.format(kpi) + "%";
+		} 
+		return "";
 	}
 
 }

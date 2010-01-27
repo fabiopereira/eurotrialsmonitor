@@ -27,6 +27,6 @@ public class EurotrialsBootstrap {
 	private void createUser(String usuario) {
 		Monitor monitor = new Monitor();
 		monitor.setUsuario(usuario);
-		monitorRepository.add(monitor);
+		monitorRepository.persist(monitor);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import me.fabiopereira.eurotrialsmonitor.model.FormularioRespondido;
+import me.fabiopereira.eurotrialsmonitor.model.FormulariosRespondidos;
 import me.fabiopereira.eurotrialsmonitor.repository.FormularioRespondidoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class FormularioRespondidoSearchController {
 	@RequestMapping(method = RequestMethod.GET)
 	public void get(HttpServletRequest request) {
 		List<FormularioRespondido> formulariosRespondidos = formularioRespondidoRepository.findAll();		
-		request.setAttribute("formulariosRespondidos", formulariosRespondidos);
+		request.setAttribute("formulariosRespondidos", new FormulariosRespondidos(formulariosRespondidos));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

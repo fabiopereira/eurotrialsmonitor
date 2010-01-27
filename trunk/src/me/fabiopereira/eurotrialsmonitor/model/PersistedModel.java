@@ -57,4 +57,8 @@ public abstract class PersistedModel implements Serializable {
 			append(this.key, other.key).
 			isEquals();
 	}
+	
+	public void onPersist() {
+		
+	}
 }

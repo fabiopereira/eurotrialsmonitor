@@ -1,32 +1,43 @@
 #parse("header.vm")
-<div>
-Bem vindo $monitor.usuario
-</div>
+
+  <link type="text/css" href="http://jqueryui.com/latest/themes/base/ui.all.css" rel="stylesheet" />
+  <script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.core.js"></script>
+  <script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $("#tabs").tabs();
+  });
+  </script>
+
 
 <form action="formularioRespondido" method="POST">
-
-$!errorMessage
 
 <input type="hidden" name="keyValue" id="keyValue" value="$!formularioRespondido.keyValue"> 
 
   <fieldset>
     <legend>Formulário #if($formularioRespondido.kpi) - KPI $formularioRespondido.kpiAsString #end</legend>
-	Estudo: <input type="text" name="estudo" id="estudo" value="$!formularioRespondido.estudo" size="60"><br/><br/>
-	Centro: <input type="text" name="centro" id="centro" value="$!formularioRespondido.centro" size="60"><br/><br/>
-	Numero da Visita: <input type="text" name="numeroVisita" id="numeroVisita" value="$!formularioRespondido.numeroVisita" maxlenght="3" size="3">&nbsp;&nbsp;&nbsp;&nbsp;
-	Data da Visita: <input type="text" name="dataVisita" id="dataVisita" value="$!formularioRespondido.dataVisitaAsString" maxlenght="10" size="10">
+	Estudo* : <input type="text" name="estudo" id="estudo" value="$!formularioRespondido.estudo" size="100"><br/><br/>
+	Centro* : <input type="text" name="centro" id="centro" value="$!formularioRespondido.centro" size="100"><br/><br/>
+	Numero da Visita* : <input type="text" name="numeroVisita" id="numeroVisita" value="$!formularioRespondido.numeroVisita" maxlenght="3" size="3">&nbsp;&nbsp;&nbsp;&nbsp;
+	Data da Visita* : <input type="text" name="dataVisita" id="dataVisita" value="$!formularioRespondido.dataVisitaAsString" maxlenght="10" size="10">
    </fieldset>
 
 
+<div id="tabs">
+    <ul>
 #foreach($etapaRespondida in $formularioRespondido.etapaRespondidas)
 #set($etapaRespondidaCount = $velocityCount)
-  <fieldset>
-    <legend>$etapaRespondida.etapa.descricao #if($etapaRespondida.kpi) - KPI $etapaRespondida.kpiAsString #end</legend>
+        <li><a href="#fragment-$etapaRespondidaCount"><span>$etapaRespondida.etapa.descricao #if($etapaRespondida.kpi) ($etapaRespondida.kpiAsString) #end</span></a></li>
+#end        
+    </ul>
+#foreach($etapaRespondida in $formularioRespondido.etapaRespondidas)
+#set($etapaRespondidaCount = $velocityCount)
+    <div id="fragment-$etapaRespondidaCount">
 #foreach($perguntaRespondida in $etapaRespondida.perguntasRespondidas)
 #set($perguntaRespondidaCount = $velocityCount)
 #set($pergunta = $etapaRespondida.etapa.getPerguntaByNumero($perguntaRespondidaCount))
 
-$pergunta.descricao <br>
+<b>$pergunta.numero - $pergunta.descricao</b> <br>
 
 <div>
 <input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="SIM" #if($perguntaRespondida.resposta == "SIM") checked #end >Sim 
@@ -34,16 +45,16 @@ $pergunta.descricao <br>
 <input type="radio" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].resposta" value="NA"  #if($perguntaRespondida.resposta == "NA") checked #end >NA
 </div>
 <div>
-<input type="text" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].justificativa" id="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].justificativa" value="$!perguntaRespondida.justificativa">
+Justificativa : <input type="text" size="60" name="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].justificativa" id="etapaRespondidas[$etapaRespondidaCount].perguntasRespondidas[$perguntaRespondidaCount].justificativa" value="$!perguntaRespondida.justificativa">
 </div>
 <br>
 #end
-
-
-</fieldset>
+    </div>
 #end
+</div>
 
-<input type="submit"/>
+<br>
+<input type="submit" value="Salvar"/>
 
 </form>
 
