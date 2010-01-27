@@ -11,6 +11,8 @@ import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import me.fabiopereira.eurotrialsmonitor.exception.CampoInvalidoException;
+
 import org.apache.commons.lang.StringUtils;
 
 @PersistenceCapable
@@ -42,7 +44,7 @@ public class FormularioRespondido extends PersistedModel {
 		if (monitor == null) {
 			throw new IllegalArgumentException("Monitor nao pode ser nulo");
 		}
-		this.setMonitor(monitor);
+		this.setMonitor(monitor);		
 	}
 
 	public String getEstudo() {
@@ -82,9 +84,13 @@ public class FormularioRespondido extends PersistedModel {
 		this.dataVisita = dataVisita;
 	}
 
-	public void setDataVisitaAsString(String dataVisita) throws ParseException {
+	public void setDataVisitaAsString(String dataVisita) {
 		if (StringUtils.isNotBlank(dataVisita))
-			this.dataVisita = sdf.parse(dataVisita);
+			try {
+				this.dataVisita = sdf.parse(dataVisita);
+			} catch (ParseException e) {
+				throw new CampoInvalidoException("Data da Visita", dataVisita);
+			}
 	}
 
 	public List<EtapaRespondida> getEtapaRespondidas() {
@@ -134,4 +140,18 @@ public class FormularioRespondido extends PersistedModel {
 	public void responderTodas(Resposta resposta) {
 		getPerguntasRespondidas().responderTodas(resposta);
 	}
+
+	@Override
+	public void onPersist() {
+		getPerguntasRespondidas().validateOnPersist();
+	}
+
+	public void setNumeroVisita(String numeroVisita) {
+		try {
+			setNumeroVisita(Integer.valueOf(numeroVisita));
+		} catch (Exception e) {
+			throw new CampoInvalidoException("Numero da Visita", numeroVisita);
+		}
+	}
+	
 }

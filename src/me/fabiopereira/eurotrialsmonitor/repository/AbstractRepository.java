@@ -6,13 +6,16 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import me.fabiopereira.eurotrialsmonitor.model.PersistedModel;
+
 import com.google.appengine.api.datastore.Key;
 
-public abstract class AbstractRepository<T> {
+public abstract class AbstractRepository<T extends PersistedModel> {
 
-	public T add(final T entity) {
+	public T persist(final T entity) {
+		entity.onPersist();
 		pm().currentTransaction().begin();
-		try {
+		try {			
 			pm().makePersistent(entity);
 			pm().currentTransaction().commit();
 		} finally {

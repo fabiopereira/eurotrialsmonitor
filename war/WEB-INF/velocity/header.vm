@@ -19,6 +19,7 @@
 <script type="text/javascript" src="index.php_files/mootools-core.js"></script>
 <script type="text/javascript" src="index.php_files/mootools-more.js"></script>
 <script type="text/javascript" src="index.php_files/submenu.js"></script>
+<script type="text/javascript" src="index.php_files/jquery-1.4.1.min.js"></script>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -669,7 +670,8 @@ function CheckValidEmail(field)
 				</div>
 				#if ($monitor)
 				<div class="idioma">
-					<div>						
+					<div>
+						<span style="color:white">$!monitor.usuario | </span>						
 						<a href="/formularioRespondido" style="color:white">Novo Formulário</a> <span style="color:white"> | </span>
 						<a href="/formularioRespondidoSearch" style="color:white">Busca</a> <span style="color:white"> | </span>
 						<a href="/monitorLogout" style="color:white">Logout</a>						
@@ -685,16 +687,10 @@ function CheckValidEmail(field)
 			</div>
 			<div class="menuGlobal" id="menuGlobal" style="display: block; opacity: 1;">
 		<div class="contentContainer">
-			<div class="center">
-				<div class="outrasContent">
-				<div class="outrasContentTopo">
-				<div class="outrasLeft">
-				<div class="outrasTitulo">
-				</div>
-				<div class="outrasSubtitulo">
-				</div>
-				<div class="outrasText">
+			<br><br><br>
 
+#if($errorMessage)
+<div id="flashNotification" class="notificationError">$!errorMessage</div>
+#end
 
-
-
+		

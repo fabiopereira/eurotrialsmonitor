@@ -2,6 +2,7 @@ package me.fabiopereira.eurotrialsmonitor.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import me.fabiopereira.eurotrialsmonitor.exception.CampoObrigatorioException;
 import me.fabiopereira.eurotrialsmonitor.model.Monitor;
 import me.fabiopereira.eurotrialsmonitor.model.MonitorLogin;
 import me.fabiopereira.eurotrialsmonitor.repository.MonitorRepository;
@@ -30,16 +31,13 @@ public class MonitorLoginController {
 	}
 
     @RequestMapping(method = RequestMethod.POST)
-	public String monitorLogin(@ModelAttribute MonitorLogin monitorLogin, 
-			BindingResult bindingResult, HttpServletRequest request) {
+	public String monitorLogin(@ModelAttribute MonitorLogin monitorLogin, HttpServletRequest request) {
     	if (StringUtils.isBlank(monitorLogin.getId())) {
-			bindingResult.reject("invalid.login");
-			return null;
+    		throw new CampoObrigatorioException();
     	}
 		Monitor monitor = monitorRepository.findByUsuario(monitorLogin.getId());
 		if (monitor == null) {
-			bindingResult.reject("invalid.login");
-			return null;
+			throw new MonitorNaoEncontrado(monitorLogin.getId());
 		}
 		request.getSession().setAttribute("monitor", monitor);
 		return "redirect:" + FormularioRespondidoSearchController.URL;

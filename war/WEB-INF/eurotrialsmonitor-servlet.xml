@@ -62,4 +62,9 @@
 		p:exposeSpringMacroHelpers="true"
 	/>
 	
+    <bean id="exceptionResolver" class="me.fabiopereira.eurotrialsmonitor.exception.EurotrialsExceptionHandler">
+        <property name="defaultErrorView" value="error"/>
+        <property name="defaultStatusCode" value="500"/>
+    </bean>	
+	
 </beans>
