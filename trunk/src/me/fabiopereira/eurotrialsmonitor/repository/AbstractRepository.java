@@ -47,7 +47,38 @@ public abstract class AbstractRepository<T extends PersistedModel> {
 			query.closeAll();
 		}
 	}
+	
+	protected List<T> findListByQuery(Query query, Object param) {
+		try {
+			List<T> entities = (List<T>) query.execute(param);
+			pm().detachCopyAll(entities);
+			return entities;
+		} finally {
+			query.closeAll();
+		}
+	}
 
+	protected List<T> findListByQuery(Query query, Object param, Object param2) {
+		try {
+			List<T> entities = (List<T>) query.execute(param, param2);
+			pm().detachCopyAll(entities);
+			return entities;
+		} finally {
+			query.closeAll();
+		}
+	}
+
+	protected List<T> findListByQuery(Query query, Object param, Object param2, Object param3) {
+		try {
+			List<T> entities = (List<T>) query.execute(param, param2, param3);
+			pm().detachCopyAll(entities);
+			return entities;
+		} finally {
+			query.closeAll();
+		}
+	}
+
+	
 	public List<T> findAll() {
 		Query query = pm().newQuery(getEntityClass());
 		try {

@@ -44,7 +44,7 @@ public class FormularioRespondido extends PersistedModel {
 		if (monitor == null) {
 			throw new IllegalArgumentException("Monitor nao pode ser nulo");
 		}
-		this.setMonitor(monitor);		
+		this.setMonitor(monitor);
 	}
 
 	public String getEstudo() {
@@ -120,16 +120,17 @@ public class FormularioRespondido extends PersistedModel {
 	public Double getKpi() {
 		return KPICalculator.getKpi(getPerguntasRespondidas());
 	}
-	
-	public String getKpiAsString(){
+
+	public String getKpiAsString() {
 		return KPICalculator.getKpiAsString(getPerguntasRespondidas());
 	}
-	
+
 	public PerguntasRespondidas getPerguntasRespondidas() {
 		List<PerguntaRespondida> perguntasRespondidas = new ArrayList<PerguntaRespondida>();
-		for (EtapaRespondida etapaRespondida : etapaRespondidas) {
-			perguntasRespondidas.addAll(etapaRespondida.getPerguntasRespondidas());
-		}
+		if (etapaRespondidas != null)
+			for (EtapaRespondida etapaRespondida : etapaRespondidas) {
+				perguntasRespondidas.addAll(etapaRespondida.getPerguntasRespondidas());
+			}
 		return new PerguntasRespondidas(perguntasRespondidas);
 	}
 
@@ -144,6 +145,7 @@ public class FormularioRespondido extends PersistedModel {
 	@Override
 	public void onPersist() {
 		getPerguntasRespondidas().validateOnPersist();
+		getMonitor().makeSureIsNotAdmin();
 	}
 
 	public void setNumeroVisita(String numeroVisita) {
@@ -153,5 +155,5 @@ public class FormularioRespondido extends PersistedModel {
 			throw new CampoInvalidoException("Numero da Visita", numeroVisita);
 		}
 	}
-	
+
 }

@@ -1,15 +1,4 @@
-<!-- Indices written at Wed, 27 Jan 2010 12:33:06 UTC -->
+<!-- Indices written at Fri, 5 Feb 2010 10:11:51 UTC -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="EtapaRespondida" ancestor="true" source="auto">
-        <property name="etapaRespondidas_INTEGER_IDX" direction="asc"/>
-    </datastore-index>
-
-    <!-- Used 3 times in query history -->
-    <datastore-index kind="PerguntaRespondida" ancestor="true" source="auto">
-        <property name="perguntasRespondidas_INTEGER_IDX" direction="asc"/>
-    </datastore-index>
-
-</datastore-indexes>

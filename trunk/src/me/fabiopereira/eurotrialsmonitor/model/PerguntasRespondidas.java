@@ -47,5 +47,11 @@ public class PerguntasRespondidas {
 				throw new TodasPerguntasComRespostaNaoTemQuePossuirJustificativaException();
 			}
 		}
-	}	
+	}
+
+	public List<PerguntaRespondida> getList() {
+		return list;
+	}
+	
+	
 }

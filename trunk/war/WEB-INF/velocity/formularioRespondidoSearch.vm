@@ -1,13 +1,24 @@
 #parse("header.vm")
 
+<fieldset>
+ <legend>Busca de Formulários</legend>
+ 
+<form name="novoMonitor" action="/formularioRespondidoSearch" method="POST">
+<br/><br/>
+Data da visita entre: <input type="text" id="startDate" name="startDate" size="10" value="$!startDate"/> e <input type="text" id="endDate" name="endDate" size="10" value="$!endDate"/><br><br>
+#if($monitor.admin)
+Monitor: <input type="text" id="monitorUsuarioParam" name="monitorUsuarioParam" value="$!monitorUsuarioParam"/><br/><br/>
+#end
+<input type="submit" value="Buscar"/><br/><br/>
+</form>
+
+</fieldset>
+
+
+#if ($formulariosRespondidos && !$formulariosRespondidos.list.empty)
+
+<fieldset> <legend>Formulários</legend>
 <table border="1">
-
-#if($formulariosRespondidos.list.empty)
-
-Bem vindo $monitor.usuario, você não possui nenhum formulário respondido.
-
-#else
-
 	<tr>
 		<th width="20%">Monitor</th>
 		<th width="20%">Data da Visita</th>
@@ -34,10 +45,15 @@ Bem vindo $monitor.usuario, você não possui nenhum formulário respondido.
 		</td>
 	</tr>
 	#end
+</table>
+<br><br>
+#if($formulariosRespondidos.kpi) O KPI composto de todos os formulários da lista é $formulariosRespondidos.kpiAsString #end
+
+</fieldset>
 
 #end
 
-</table>
+
 
 
 #parse("footer.vm")

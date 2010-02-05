@@ -3,6 +3,6 @@
 
 Monitor* :
 <input type="text" name="id" id="id" value="$!monitorLogin.id">
-<input type="submit"/> 
+<input type="submit" value="Login"/> 
 </form>
 #parse("footer.vm")

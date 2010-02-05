@@ -1,0 +1,12 @@
+#parse("header.vm")
+<form name="novoMonitor" action="/novoMonitor" method="POST">
+
+<fieldset><legend>Criar novo usuário</legend>
+<br/><br/>
+Usuário: <input type="text" name="usuario" id="usuario" value="$!usuario" width="50" size="50"><br/><br/>
+<input type="submit" value="Criar"/><br/><br/>
+</fieldset>
+
+ 
+</form>
+#parse("footer.vm")
