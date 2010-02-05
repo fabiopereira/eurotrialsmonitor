@@ -11,6 +11,7 @@ public class MonitorLoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		new EurotrialsRequest(request).echoAllParams();
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.contains("monitorLogin") || pathInfo.contains("bootstrap")) {
 			return true;

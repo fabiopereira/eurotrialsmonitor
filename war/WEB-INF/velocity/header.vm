@@ -13,13 +13,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Eurotrials | Scientific Consultants</title>
 
-<link href="index.php_files/style.css" rel="stylesheet" type="text/css">
+<link href="static/style.css" rel="stylesheet" type="text/css">
 <!-- <link href="publish.css" rel="stylesheet" type="text/css" /> -->
 
-<script type="text/javascript" src="index.php_files/mootools-core.js"></script>
-<script type="text/javascript" src="index.php_files/mootools-more.js"></script>
-<script type="text/javascript" src="index.php_files/submenu.js"></script>
-<script type="text/javascript" src="index.php_files/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="static/mootools-core.js"></script>
+<script type="text/javascript" src="static/mootools-more.js"></script>
+<script type="text/javascript" src="static/submenu.js"></script>
+<script type="text/javascript" src="static/submenu.js"></script>
+
 
 <script type="text/javascript">
 //<![CDATA[
@@ -666,15 +667,17 @@ function CheckValidEmail(field)
 		<div class="header">
 			<div class="topHeader">
 				<div class="headerTxt">
-					<img src="index.php_files/headerTxt.png" alt="Developing Clinical Research in Europe and Latin America" title="Developing Clinical Research in Europe and Latin America" border="0">
+					<img src="static/headerTxt.png" alt="Developing Clinical Research in Europe and Latin America" title="Developing Clinical Research in Europe and Latin America" border="0">
 				</div>
 				#if ($monitor)
 				<div class="idioma">
 					<div>
-						<span style="color:white">$!monitor.usuario | </span>						
-						<a href="/formularioRespondido" style="color:white">Novo Formulário</a> <span style="color:white"> | </span>
+						<span style="color:white">$!monitor.usuario | </span>
+						#if ($monitor.admin) <a href="/novoMonitor" style="color:white">Novo Usuário</a> <span style="color:white"> | </span> #end
+						#if (not $monitor.admin) <a href="/formularioRespondido" style="color:white">Novo Formulário</a> <span style="color:white"> | </span> #end
 						<a href="/formularioRespondidoSearch" style="color:white">Busca</a> <span style="color:white"> | </span>
-						<a href="/monitorLogout" style="color:white">Logout</a>						
+						<a href="/monitorLogout" style="color:white">Logout</a>
+											
 					</div>					
 				</div>
 				#end
@@ -682,7 +685,7 @@ function CheckValidEmail(field)
 			<div class="clearBoth"></div>
 			<div class="logoCont">
 			<div class="logo">
-				<a href="http://www.eurotrials.com/index.php?m=0&amp;idioma=1"><img style="border: medium none ;" src="index.php_files/logo.png" alt="Eurotrials &#8211; Scientific Consultants" title="Eurotrials &#8211; Scientific Consultants"></a>
+				<a href="http://www.eurotrials.com/index.php?m=0&amp;idioma=1"><img style="border: medium none ;" src="static/logo.png" alt="Eurotrials &#8211; Scientific Consultants" title="Eurotrials &#8211; Scientific Consultants"></a>
 			</div>
 			</div>
 			<div class="menuGlobal" id="menuGlobal" style="display: block; opacity: 1;">
@@ -692,5 +695,9 @@ function CheckValidEmail(field)
 #if($errorMessage)
 <div id="flashNotification" class="notificationError">$!errorMessage</div>
 #end
+#if($infoMessage)
+<div id="flashNotification" class="notificationInfo">$!infoMessage</div>
+#end
+
 
 		

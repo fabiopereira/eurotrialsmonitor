@@ -45,6 +45,7 @@ public class FormularioRespondidoController {
 		populateRespostasFromRequest(formularioRespondido, request);
 		formularioRespondidoRepository.persist(formularioRespondido);
 		request.setAttribute("formularioRespondido", formularioRespondido);
+		request.setAttribute("infoMessage", "Formulário atualizado com sucesso.");
 	}
 
 	private void populateFormularioHeaderFromRequest(FormularioRespondido formularioRespondido, HttpServletRequest request) {
