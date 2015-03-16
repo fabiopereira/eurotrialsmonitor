@@ -1,0 +1,1 @@
+The Eurotrials Monitor will help the clinical researchers from Eurotrials to keep track of their visits.
